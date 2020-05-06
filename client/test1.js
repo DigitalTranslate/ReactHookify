@@ -11,10 +11,11 @@ export something
 `;
 
 function translate(string) {
+  const propsCheck = string.includes('props') ? 'props' : '';
   const nameOfClass = getClassName(string);
   const renderSlice = getRender(string);
 
-  return `function ${nameOfClass} {
+  return `function ${nameOfClass}(${propsCheck}) {
     return (
       ${renderSlice}
     )

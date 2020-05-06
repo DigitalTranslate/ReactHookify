@@ -3,36 +3,16 @@ let str = `import statement
 
 class    testApp extends Component {
 
-  componentDidMount() {
-    props.arry[i]
-    obj = {}
-  }
-
   render() {
-    const array = [1]
-    const hello = this.props.hello
-    return <div>hi</div>;
+    return <div>{array[1]}</div>;
   }
 }
 export something
 `;
 
 function translate(string) {
-  const classIdx = string.indexOf('class');
-  const classSlice = string.slice(classIdx);
-  const nameOfClass = classSlice.split(/[ ]+/)[1];
-
-  let renderIdx = string.indexOf('render');
-  renderIdx = string.indexOf('{', renderIdx);
-  let renderEndIdx = renderIdx + 1;
-  let renderSlice = string.slice(renderIdx, renderEndIdx);
-  while (!validBraces(renderSlice)) {
-    renderEndIdx++;
-    renderSlice = string.slice(renderIdx, renderEndIdx);
-  }
-  renderSlice = renderSlice
-    .slice(renderSlice.indexOf('return') + 6, renderSlice.length - 2)
-    .trim();
+  const nameOfClass = getClassName(string);
+  const renderSlice = getRender(string);
 
   return `function ${nameOfClass} {
     return (
@@ -45,9 +25,7 @@ function translate(string) {
 
 expected output:
 
-function testApp(props) {
-  const array = [1]
-  hello = this.props
+function testApp() {
   return (
     <div>hi</div>
   )
@@ -62,6 +40,21 @@ function getClassName(string) {
   const classSlice = string.slice(classIdx);
   const nameOfClass = classSlice.split(/[ ]+/)[1];
   return nameOfClass;
+}
+
+function getRender(string) {
+  let renderIdx = string.indexOf('render');
+  renderIdx = string.indexOf('{', renderIdx);
+  let renderEndIdx = renderIdx + 1;
+  let renderSlice = string.slice(renderIdx, renderEndIdx);
+  while (!validBraces(renderSlice)) {
+    renderEndIdx++;
+    renderSlice = string.slice(renderIdx, renderEndIdx);
+  }
+  renderSlice = renderSlice
+    .slice(renderSlice.indexOf('return') + 6, renderSlice.length - 2)
+    .trim();
+  return renderSlice;
 }
 
 function validBraces(braces) {
