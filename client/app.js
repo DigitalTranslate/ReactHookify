@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state = { name: 'bob' };
+  }
+  componentDidMount() {
+    return 'hi';
+  }
+
   render() {
-    return (
-      <div>
-        <div>hi</div>
-      </div>
-    );
+    return <div>hi</div>;
   }
 }
