@@ -18,7 +18,7 @@ function translate(string) {
   const nameOfClass = getClassName(string);
   const propsCheck = string.includes('props') ? 'props' : '';
   const beforeReturn = getBeforeReturn(string);
-  const returnSlice = getReturn(string);
+  const returnSlice = getInsideOfFunc(string, 'render');
 
   let finalStr = `function ${nameOfClass}(${propsCheck}) {
     ${beforeReturn}
@@ -62,11 +62,6 @@ function getBeforeReturn(string) {
   return middle;
 }
 
-function getReturn(string) {
-  let renderIdx = string.indexOf('render');
-  return getInsideOfFunc(string, renderIdx);
-}
-
 function validBraces(braces) {
   let matches = { '(': ')', '{': '}', '[': ']' };
   let stack = [];
@@ -91,7 +86,8 @@ function validBraces(braces) {
   return stack.length === 0; // any unclosed braces left?
 }
 
-function getInsideOfFunc(string, startIdx) {
+function getInsideOfFunc(string, methodStr) {
+  let startIdx = string.indexOf(methodStr);
   startIdx = string.indexOf('{', startIdx);
 
   let endIdx = startIdx + 1;
