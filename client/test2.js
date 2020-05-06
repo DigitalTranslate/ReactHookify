@@ -12,22 +12,22 @@ class TestApp extends Component {
 }
 
 export default TestApp
-`;
+`
 
 function translate(string) {
-  const nameOfClass = getClassName(string);
-  const propsCheck = string.includes('props') ? 'props' : '';
-  const beforeReturn = getBeforeReturn(string);
-  const returnSlice = getInsideOfFunc(string, 'render');
+  const nameOfClass = getClassName(string)
+  const propsCheck = string.includes('props') ? 'props' : ''
+  const beforeReturn = getBeforeReturn(string)
+  const returnSlice = getInsideOfFunc(string, 'render')
 
   let finalStr = `function ${nameOfClass}(${propsCheck}) {
     ${beforeReturn}
     return (
       ${returnSlice}
     )
-  }`;
+  }`
 
-  return finalStr.replace(/this./gi, '');
+  return finalStr.replace(/this./gi, '')
 }
 
 /*
@@ -42,62 +42,66 @@ function testApp() {
 
 */
 
-console.log(translate(str));
+// console.log(translate(str))
 
 function getClassName(string) {
-  const classIdx = string.indexOf('class');
-  const classSlice = string.slice(classIdx);
-  const nameOfClass = classSlice.split(/[ ]+/)[1];
-  return nameOfClass;
+  const classIdx = string.indexOf('class')
+  const classSlice = string.slice(classIdx)
+  const nameOfClass = classSlice.split(/[ ]+/)[1]
+  return nameOfClass
 }
 
 function getBeforeReturn(string) {
-  let renderIdx = string.indexOf('render');
-  renderIdx = string.indexOf('{', renderIdx);
+  let renderIdx = string.indexOf('render')
+  renderIdx = string.indexOf('{', renderIdx)
 
   let middle = string
     .slice(renderIdx + 1, string.indexOf('return', renderIdx))
-    .trim();
+    .trim()
 
-  return middle;
+  return middle
 }
 
 function validBraces(braces) {
-  let matches = { '(': ')', '{': '}', '[': ']' };
-  let stack = [];
-  let currentChar;
+  let matches = { '(': ')', '{': '}', '[': ']' }
+  let stack = []
+  let currentChar
 
   for (let i = 0; i < braces.length; i++) {
-    currentChar = braces[i];
+    currentChar = braces[i]
 
     if ('(){}[]'.includes(currentChar)) {
       if (matches[currentChar]) {
         // opening braces
-        stack.push(currentChar);
+        stack.push(currentChar)
       } else {
         // closing braces
         if (currentChar !== matches[stack.pop()]) {
-          return false;
+          return false
         }
       }
     }
   }
 
-  return stack.length === 0; // any unclosed braces left?
+  return stack.length === 0 // any unclosed braces left?
 }
 
 function getInsideOfFunc(string, methodStr) {
-  let startIdx = string.indexOf(methodStr);
-  startIdx = string.indexOf('{', startIdx);
+  let startIdx = string.indexOf(methodStr)
+  startIdx = string.indexOf('{', startIdx)
 
-  let endIdx = startIdx + 1;
-  let funcSlice = string.slice(startIdx, endIdx);
+  let endIdx = startIdx + 1
+  let funcSlice = string.slice(startIdx, endIdx)
   while (!validBraces(funcSlice)) {
-    endIdx++;
-    funcSlice = string.slice(startIdx, endIdx);
+    endIdx++
+    funcSlice = string.slice(startIdx, endIdx)
   }
   funcSlice = funcSlice
     .slice(funcSlice.indexOf('return') + 6, funcSlice.length - 2)
-    .trim();
-  return funcSlice;
+    .trim()
+  return funcSlice
+}
+
+module.exports = {
+  getInsideOfFunc,
 }
