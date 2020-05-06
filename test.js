@@ -13,6 +13,7 @@ class Test {
 
 console.log('LOOK HERE', Test);
 console.log('LOOK HERE2', Test.prototype);
+console.log('3', Test.prototype.render);
 
 // let classTest = new Test();
 // const stringTest = JSON.stringify(classTest);
