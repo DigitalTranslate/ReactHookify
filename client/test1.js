@@ -4,7 +4,13 @@ let str = `class testApp extends Component {
   }
 }`;
 
-function translate(string) {}
+const classToFunctionTemp = `function ${name}()`;
+
+function translate(string) {
+  const stringArray = string.slice();
+}
+
+function classToFunctionTemp(string) {}
 
 /*
 
