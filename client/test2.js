@@ -64,18 +64,7 @@ function getBeforeReturn(string) {
 
 function getReturn(string) {
   let renderIdx = string.indexOf('render');
-  renderIdx = string.indexOf('{', renderIdx);
-
-  let renderEndIdx = renderIdx + 1;
-  let returnSlice = string.slice(renderIdx, renderEndIdx);
-  while (!validBraces(returnSlice)) {
-    renderEndIdx++;
-    returnSlice = string.slice(renderIdx, renderEndIdx);
-  }
-  returnSlice = returnSlice
-    .slice(returnSlice.indexOf('return') + 6, returnSlice.length - 2)
-    .trim();
-  return returnSlice;
+  return getInsideOfFunc(string, renderIdx);
 }
 
 function validBraces(braces) {
@@ -100,4 +89,19 @@ function validBraces(braces) {
   }
 
   return stack.length === 0; // any unclosed braces left?
+}
+
+function getInsideOfFunc(string, startIdx) {
+  startIdx = string.indexOf('{', startIdx);
+
+  let endIdx = startIdx + 1;
+  let funcSlice = string.slice(startIdx, endIdx);
+  while (!validBraces(funcSlice)) {
+    endIdx++;
+    funcSlice = string.slice(startIdx, endIdx);
+  }
+  funcSlice = funcSlice
+    .slice(funcSlice.indexOf('return') + 6, funcSlice.length - 2)
+    .trim();
+  return funcSlice;
 }
