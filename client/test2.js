@@ -1,24 +1,33 @@
 /* eslint-disable no-lonely-if */
-let str = `import statement
+let str = `
+import react from 'react'
 
-class    testApp extends Component {
+class TestApp extends Component {
 
   render() {
+    const hello = [];
+    const thing = this.props.thing
     return <div>{array[1]}</div>;
   }
 }
-export something
+
+export default TestApp
 `;
 
 function translate(string) {
   const nameOfClass = getClassName(string);
-  const renderSlice = getRender(string);
+  const propsCheck = string.includes('props') ? 'props' : '';
+  const beforeReturn = getBeforeReturn(string);
+  const returnSlice = getReturn(string);
 
-  return `function ${nameOfClass} {
+  let finalStr = `function ${nameOfClass}(${propsCheck}) {
+    ${beforeReturn}
     return (
-      ${renderSlice}
+      ${returnSlice}
     )
   }`;
+
+  return finalStr.replace(/this./gi, '');
 }
 
 /*
@@ -42,19 +51,31 @@ function getClassName(string) {
   return nameOfClass;
 }
 
-function getRender(string) {
+function getBeforeReturn(string) {
   let renderIdx = string.indexOf('render');
   renderIdx = string.indexOf('{', renderIdx);
-  let renderEndIdx = renderIdx + 1;
-  let renderSlice = string.slice(renderIdx, renderEndIdx);
-  while (!validBraces(renderSlice)) {
-    renderEndIdx++;
-    renderSlice = string.slice(renderIdx, renderEndIdx);
-  }
-  renderSlice = renderSlice
-    .slice(renderSlice.indexOf('return') + 6, renderSlice.length - 2)
+
+  let middle = string
+    .slice(renderIdx + 1, string.indexOf('return', renderIdx))
     .trim();
-  return renderSlice;
+
+  return middle;
+}
+
+function getReturn(string) {
+  let renderIdx = string.indexOf('render');
+  renderIdx = string.indexOf('{', renderIdx);
+
+  let renderEndIdx = renderIdx + 1;
+  let returnSlice = string.slice(renderIdx, renderEndIdx);
+  while (!validBraces(returnSlice)) {
+    renderEndIdx++;
+    returnSlice = string.slice(renderIdx, renderEndIdx);
+  }
+  returnSlice = returnSlice
+    .slice(returnSlice.indexOf('return') + 6, returnSlice.length - 2)
+    .trim();
+  return returnSlice;
 }
 
 function validBraces(braces) {
