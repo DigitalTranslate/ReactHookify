@@ -54,5 +54,5 @@ function createFunctionComponentFile(funcCompInStr) {
   })
 }
 
-const finalStr = translateToFunctionComp(str1)
+const finalStr = translateToFunctionComp(str1) //this is where you test
 createFunctionComponentFile(finalStr)
