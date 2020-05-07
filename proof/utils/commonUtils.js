@@ -28,13 +28,16 @@ function validBraces(braces) {
 }
 function getInsideOfFunc(string, methodStr) {
   let startIdx = funcNameStartIdx(string, methodStr);
+  if (startIdx === undefined) return;
   startIdx = string.indexOf('{', startIdx);
   let endIdx = startIdx + 1;
+
   let funcSlice = string.slice(startIdx, endIdx);
   while (!validBraces(funcSlice)) {
     endIdx++;
     funcSlice = string.slice(startIdx, endIdx);
   }
+
   funcSlice = funcSlice
     .slice(funcSlice.indexOf('return') + 6, funcSlice.length - 2)
     .trim();
@@ -42,6 +45,7 @@ function getInsideOfFunc(string, methodStr) {
 }
 function getEndIdxOfFunc(string, methodStr) {
   let startIdx = funcNameStartIdx(string, methodStr);
+  if (startIdx === undefined) return;
   startIdx = string.indexOf('{', startIdx);
   let endIdx = startIdx + 1;
   let funcSlice = string.slice(startIdx, endIdx);
@@ -51,11 +55,12 @@ function getEndIdxOfFunc(string, methodStr) {
   }
   return endIdx;
 }
-function getBetween(string, startIdx) {
-  return string.slice(startIdx, string.indexOf('render')).trim();
+function getBody(string, startIdx) {
+  let endIdx = getEndIdxOfFunc(string, 'Component') - 1; // add in React.Component Logic
+  return string.slice(startIdx, endIdx).trim();
 }
 
-function getBody(funcs, pointer, bodyStr) {
+function getBodyMethods(funcs, pointer, bodyStr) {
   while (pointer < bodyStr.length) {
     let parenIdx = bodyStr.indexOf('(', pointer);
     let funcStartIdx = pointer;
@@ -65,22 +70,44 @@ function getBody(funcs, pointer, bodyStr) {
     let funcName = bodyStr.slice(funcStartIdx, parenIdx);
     let inside = getInsideOfFunc(bodyStr, `${funcName}`);
     pointer = getEndIdxOfFunc(bodyStr, `${funcName}`);
-    let FuncStringified = `function ${funcName.trim()}() {
+    let funcStringified = `function ${funcName.trim()}() {
       ${inside}
     }`;
-    funcs.push(FuncStringified);
+
+    if (funcName.toLowerCase() !== 'render') {
+      funcs.push(funcStringified);
+    }
   }
 }
 
+// let testBody = 'React.Component   ';
+// let testBody2 = 'React.Component2   ';
+// let testBody3 = 'hComponent   Component ';
+// let testBody4 = 'Component';
+// let testMethod = 'Component';
+// console.log(funcNameStartIdx(testBody4, testMethod));
+
 function funcNameStartIdx(string, methodStr) {
+  // console.log(string);
+  // console.log(methodStr);
   let startIdx = string.indexOf(methodStr);
+  if (startIdx === -1) return undefined;
   let endIdx = minBesidesNegOne(
     string.indexOf('(', startIdx),
     string.indexOf(' ', startIdx)
   );
 
+  // console.log(startIdx);
+  // console.log(/[a-z]/i.test(string[startIdx - 1]));
+  // while (
+  //   /[a-z]/i.test(string[startIdx - 1]) ||
+  //   string.slice(startIdx, endIdx) !== methodStr.trim()
+  // )
+
   while (string.slice(startIdx, endIdx) !== methodStr.trim()) {
+    // console.log(/[a-z]/i.test(string[startIdx - 1]));
     startIdx = string.indexOf(methodStr, endIdx);
+    // console.log(startIdx);
     endIdx = minBesidesNegOne(
       string.indexOf('(', startIdx),
       string.indexOf(' ', startIdx)
@@ -100,8 +127,8 @@ function minBesidesNegOne(num1, num2) {
 }
 
 module.exports = {
+  getBodyMethods,
   getBody,
-  getBetween,
   getEndIdxOfFunc,
   getInsideOfFunc,
   validBraces,
