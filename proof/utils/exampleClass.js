@@ -50,7 +50,9 @@ class TestApp extends Component {
   }
 }
 export default TestApp
-`;
+`
+
+
 let str2 = `import statement
 class    testApp extends Component {
   render() {
@@ -58,7 +60,9 @@ class    testApp extends Component {
   }
 }
 export something
-`;
+`
+
+
 let str3 = `
 import react from 'react'
 class TestApp extends Component {
