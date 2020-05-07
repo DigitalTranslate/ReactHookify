@@ -1,99 +1,58 @@
-const componentString = `componentDidMount() {
-  document.title = this.state.counter;
-}
-
-componentDidUpdate() {
-  document.title = this.state.counter;
-}`
-
+const { str0, str1, str2, str3, str4 } = require('./exampleClass');
+const { getInsideOfFunc, validBraces } = require('./commonUtils');
 //Loops through string and finds components-lifecycle-methods, storing them in a object with the key being the name of thelifecycle method and the value being the code block
 function findComponents(string) {
   const componentTypes = [
-    'componentDidMount()',
-    'componentDidUpdate()',
-    'componentWillUnmount()',
-  ]
-  const returnedComponents = {}
+    'componentDidMount(',
+    'componentDidUpdate(',
+    'componentWillUnmount(',
+  ];
+  const returnedComponents = {};
   for (let i = 0; i < componentTypes.length; i++) {
-    const currentComponent = componentTypes[i]
+    const currentComponent = componentTypes[i];
 
     if (string.indexOf(currentComponent) !== -1) {
-      let componentIndex = string.indexOf(currentComponent)
+      let componentIndex = string.indexOf(currentComponent);
 
-      let bracketIndex = string.indexOf('{', componentIndex)
-      let componentEndIndex = bracketIndex + 1
-      let componentSlice = string.slice(bracketIndex, componentEndIndex)
+      let bracketIndex = string.indexOf('{', componentIndex);
+      let componentEndIndex = bracketIndex + 1;
+      let componentSlice = string.slice(bracketIndex, componentEndIndex);
 
       while (!validBraces(componentSlice)) {
-        componentEndIndex++
-        componentSlice = string.slice(bracketIndex, componentEndIndex)
+        componentEndIndex++;
+        componentSlice = string.slice(bracketIndex, componentEndIndex);
       }
-      componentSlice = string.slice(componentIndex, componentEndIndex)
+      componentSlice = string.slice(componentIndex, componentEndIndex);
 
-      returnedComponents[currentComponent] = componentSlice.replace(
+      returnedComponents[currentComponent + ')'] = componentSlice.replace(
         /this.state./gi,
         ''
-      )
-
-      // returnedComponents.push(componentSlice);
+      );
     }
   }
-  return returnedComponents
+  return returnedComponents;
 }
 
 //Create a simple useEffect function from template, this assumes the collect lifecycle method is a single line
 function createUseEffect(string, method) {
   let useEffectTemplate = `useEffect(() => {
-  ${getInsideOfFunc(string, method)}})`
-  return useEffectTemplate
+  ${getInsideOfFunc(string, method)}})`;
+  return useEffectTemplate;
 }
 
-function validBraces(braces) {
-  let matches = { '(': ')', '{': '}', '[': ']' }
-  let stack = []
-  let currentChar
-
-  for (let i = 0; i < braces.length; i++) {
-    currentChar = braces[i]
-
-    if ('(){}[]'.includes(currentChar)) {
-      if (matches[currentChar]) {
-        // opening braces
-        stack.push(currentChar)
-      } else {
-        // closing braces
-        if (currentChar !== matches[stack.pop()]) {
-          return false
-        }
-      }
-    }
+console.log(findComponents(str4), 'COMPONENT OBJECT');
+const componentLifeCycleMethods = findComponents(str4);
+function createMultipleUseEffects(objectOfLifeCycle) {
+  let useEffectResults = [];
+  for (let i in objectOfLifeCycle) {
+    let currentKey = i;
+    let currentValue = objectOfLifeCycle[i];
+    const useEffect = createUseEffect(currentValue, currentKey);
+    useEffectResults.push(useEffect);
   }
-
-  return stack.length === 0 // any unclosed braces left?
+  const uniqueSet = new Set(useEffectResults);
+  const uniqueSetArray = [...uniqueSet];
+  return uniqueSetArray;
 }
 
-function getInsideOfFunc(string, methodStr) {
-  let startIdx = string.indexOf(methodStr)
-  startIdx = string.indexOf('{', startIdx)
-
-  let endIdx = startIdx + 1
-  let funcSlice = string.slice(startIdx, endIdx)
-  while (!validBraces(funcSlice)) {
-    endIdx++
-    funcSlice = string.slice(startIdx, endIdx)
-  }
-  funcSlice = funcSlice
-    .slice(funcSlice.indexOf('return') + 6, funcSlice.length - 2)
-    .trim()
-  return funcSlice
-}
-
-console.log(findComponents(componentString), 'COMPONENT OBJECT')
-
-const componentLifeCycleMethods = findComponents(componentString)
-for (let i in componentLifeCycleMethods) {
-  let currentKey = i
-  let currentValue = componentLifeCycleMethods[i]
-  const useEffect = createUseEffect(currentValue, currentKey)
-  console.log(useEffect, 'CREATE USE EFFECT')
-}
+console.log(createMultipleUseEffects(componentLifeCycleMethods), 'useEffect');

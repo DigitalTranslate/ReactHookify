@@ -68,9 +68,44 @@ class TestApp extends Component {
 export default TestApp
 `;
 
+let str4 = `import statement
+
+class    testApp extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      counter: 0,
+      open: false,
+      closed: true
+    }
+  }
+
+  componentDidMount() {
+    document.title = this.state.counter;
+  }
+
+  componentDidUpdate() {
+    document.title = this.state.counter;
+  }
+
+  componentWillUnmount() {
+    document.title = this.state.counter;
+  }
+
+  render() {
+    return <div>{array[1]}</div>
+  }
+}
+export something
+`;
+
+
 module.exports = {
   str0,
   str1,
   str2,
   str3,
+  str4,
+
 };
