@@ -3,6 +3,7 @@ const { getInsideOfFunc } = require('./commonUtils')
 //THIS FUNCTION TRANSLATES CONTENTS OF CONSTRUCTOR
 function handleConstructor(fullClassStr) {
   const constructorInside = getInsideOfFunc(fullClassStr, 'constructor')
+  if (!constructorInside) return ''
   const stateInsides = getInsideOfFunc(constructorInside, 'this.state')
   if (!stateInsides) return ''
   const arrOfStates = stateInsides
