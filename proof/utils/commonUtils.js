@@ -27,7 +27,6 @@ function validBraces(braces) {
   return stack.length === 0; // any unclosed braces left?
 }
 function getInsideOfFunc(string, methodStr) {
-  // let startIdx = string.indexOf(methodStr);
   let startIdx = funcNameStartIdx(string, methodStr);
   startIdx = string.indexOf('{', startIdx);
   let endIdx = startIdx + 1;
@@ -42,7 +41,6 @@ function getInsideOfFunc(string, methodStr) {
   return funcSlice;
 }
 function getEndIdxOfFunc(string, methodStr) {
-  // let startIdx = string.indexOf(methodStr);
   let startIdx = funcNameStartIdx(string, methodStr);
   startIdx = string.indexOf('{', startIdx);
   let endIdx = startIdx + 1;
@@ -75,17 +73,12 @@ function getBody(funcs, pointer, bodyStr) {
 }
 
 function funcNameStartIdx(string, methodStr) {
-  console.log(string);
-  console.log(methodStr);
   let startIdx = string.indexOf(methodStr);
   let endIdx = minBesidesNegOne(
     string.indexOf('(', startIdx),
     string.indexOf(' ', startIdx)
   );
-  console.log('startIdx', startIdx);
-  console.log('endIdx', endIdx);
-  console.log('sliced', string.slice(startIdx, endIdx));
-  console.log(string.slice(startIdx, endIdx).trim() === methodStr.trim());
+
   while (string.slice(startIdx, endIdx) !== methodStr.trim()) {
     startIdx = string.indexOf(methodStr, endIdx);
     endIdx = minBesidesNegOne(
