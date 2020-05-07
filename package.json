@@ -9,6 +9,9 @@
     "build-client-watch": "webpack -w",
     "start-dev": "npm run build-client-watch"
   },
+  "bin": {
+    "hookify": "./bin/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DigitalTranslate/ReactHookify.git"
@@ -20,6 +23,7 @@
   },
   "homepage": "https://github.com/DigitalTranslate/ReactHookify#readme",
   "dependencies": {
+    "chalk": "^4.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
