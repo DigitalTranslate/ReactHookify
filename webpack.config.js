@@ -2,7 +2,7 @@ module.exports = {
   entry: ['@babel/polyfill', './client/index.js'],
   output: {
     path: __dirname,
-    filename: './bundle.js',
+    filename: './public/bundle.js',
   },
   context: __dirname,
   devtool: 'source-maps',
@@ -15,4 +15,4 @@ module.exports = {
       },
     ],
   },
-};
+}

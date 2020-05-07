@@ -1,30 +1,6 @@
-const { getInsideOfFunc } = require('./test2')
-const fs = require('fs')
+const { getInsideOfFunc } = require('./commonUtils')
 
-let exampleClass = `import statement
-
-class    testApp extends Component {
-
-  constructor() {
-    super()
-    this.state = {
-      counter: 0,
-      open: false,
-      closed: true
-    }
-  }
-
-  componentDidMount() {
-    stuff
-  }
-
-  render() {
-    return <div>{array[1]}</div>;
-  }
-}
-export something
-`
-
+//THIS FUNCTION TRANSLATES CONTENTS OF CONSTRUCTOR
 function handleConstructor(fullClassStr) {
   const constructorInside = getInsideOfFunc(fullClassStr, 'constructor')
   const stateInsides = getInsideOfFunc(constructorInside, 'this.state')
@@ -42,8 +18,6 @@ function handleConstructor(fullClassStr) {
     .join('\n')
 }
 
-// TEST FOR WRITING FILE
-fs.writeFile('proof.js', handleConstructor(exampleClass), (err) => {
-  if (err) throw err
-  console.log('done')
-})
+module.exports = {
+  handleConstructor,
+}
