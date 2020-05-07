@@ -1,39 +1,45 @@
 /* eslint-disable no-path-concat */
-const { str0, str1, str2, str3 } = require('./utils/exampleClass')
-const { handleConstructor } = require('./utils/constructorUtil')
-const { getBeforeReturn } = require('./utils/renderUtil')
-const fs = require('fs')
+
+const { str0, str1, str2, str3 } = require('./utils/exampleClass');
+const { handleConstructor } = require('./utils/constructorUtil');
+const fs = require('fs');
 const {
+  getBodyMethods,
   getBody,
-  getBetween,
   getEndIdxOfFunc,
   getInsideOfFunc,
   getClassName,
-} = require('./utils/commonUtils')
+} = require('./utils/commonUtils');
+const { getBeforeReturn } = require('./utils/renderUtil');
 
 //THIS FUNCTION IS IN CHARGE OF TRANSLATING CLASS COMPONENT TO FUNCTIONAL COMPONENT && PUTS IT ALL TOGETHER
 function translateToFunctionComp(classCompInStr) {
-  const nameOfClass = getClassName(classCompInStr)
-  //checks whole class string from 'props'
-  const propsCheck = classCompInStr.includes('props') ? 'props' : ''
+  const nameOfClass = getClassName(classCompInStr);
+    //checks whole class string from 'props'
+  const propsCheck = classCompInStr.includes('props') ? 'props' : '';
+  let startOfBodyIdx = classCompInStr.indexOf('{') + 1;
 
-  //CONSTRUCTOR
-  const handledConstructor = handleConstructor(classCompInStr)
+    //CONSTRUCTOR
+  const constructorCheck = /(constructor)[ ]*\(/.test(classCompInStr);
+  let handledConstructor = '';
 
-  //BODY
-  const constructorEndIdx = getEndIdxOfFunc(classCompInStr, 'constructor')
-  const betweenConstructorAndRender = getBetween(
-    classCompInStr,
-    constructorEndIdx
-  )
-  let funcs = []
-  let pointer = 0
-  getBody(funcs, pointer, betweenConstructorAndRender)
-  const funcCheck = funcs.length ? true : false
+  if (constructorCheck) {
+    handledConstructor = handleConstructor(classCompInStr);
+    startOfBodyIdx = getEndIdxOfFunc(classCompInStr, 'constructor');
+  }
 
-  //RENDER
-  const beforeReturn = getBeforeReturn(classCompInStr)
-  const returnSlice = getInsideOfFunc(classCompInStr, 'render')
+    //BODY
+  let body = getBody(classCompInStr, startOfBodyIdx);
+
+  let funcs = [];
+  let pointer = 0;
+  getBodyMethods(funcs, pointer, body);
+
+  const funcCheck = funcs.length ? true : false;
+  
+  //RETURN STATEMENT
+  const beforeReturn = getBeforeReturn(classCompInStr);
+  const returnSlice = getInsideOfFunc(classCompInStr, 'render');
 
   //FINAL TEMPLATE
   let finalStr = `function ${nameOfClass}(${propsCheck}) {
@@ -43,8 +49,8 @@ function translateToFunctionComp(classCompInStr) {
     return (
       ${returnSlice}
     )
-  }`
-  return finalStr.replace(/this.props/gi, 'props')
+  }`;
+  return finalStr.replace(/this.props/gi, 'props');
 }
 
 //THIS FUNCTION TAKES CREATED STRING AND WRITES A FILE
@@ -75,3 +81,4 @@ readAndCreate(__dirname + '/../client/app.js')
 //TESTING WITHOUT READING FILE
 const finalStr = translateToFunctionComp(str0) //change which string to test
 createFunctionComponentFile(finalStr)
+
