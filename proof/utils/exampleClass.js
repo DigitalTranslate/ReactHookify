@@ -15,12 +15,20 @@ class    testApp extends Component {
 
   }
 
+  genericMethod2     () {
+
+  }
+
+  genericMethod() {
+
+  }
+
   render() {
     return <div>{array[1]}</div>
   }
 }
 export something
-`
+`;
 
 let str1 = `
 import react from 'react'
@@ -39,7 +47,7 @@ class TestApp extends Component {
   }
 }
 export default TestApp
-`
+`;
 let str2 = `import statement
 class    testApp extends Component {
   render() {
@@ -47,7 +55,7 @@ class    testApp extends Component {
   }
 }
 export something
-`
+`;
 let str3 = `
 import react from 'react'
 class TestApp extends Component {
@@ -58,11 +66,11 @@ class TestApp extends Component {
   }
 }
 export default TestApp
-`
+`;
 
 module.exports = {
   str0,
   str1,
   str2,
   str3,
-}
+};

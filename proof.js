@@ -6,6 +6,12 @@ const [closed, setclosed] = useState(true)
 function componentDidMount() {
       
     }
+function genericMethod2() {
+      
+    }
+function genericMethod() {
+      
+    }
 
     
     return (
