@@ -6,11 +6,11 @@ function handleConstructor(fullClassStr) {
   if (!constructorInside) return ''
   const stateInsides = getInsideOfFunc(constructorInside, 'this.state')
   if (!stateInsides) return ''
+  console.log(stateInsides)
   const arrOfStates = stateInsides
     .split(',')
     .map((singleState) => singleState.trim().split(':'))
   //arrOfStates = [ [ 'counter', ' 0' ], [ 'open', ' false' ], [ 'closed', ' true' ] ]
-
   const handledConstructor = arrOfStates
     .map(
       (singleState) =>

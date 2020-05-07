@@ -1,3 +1,4 @@
+/* eslint-disable no-path-concat */
 const { str0, str1, str2, str3 } = require('./utils/exampleClass')
 const { handleConstructor } = require('./utils/constructorUtil')
 const { getBeforeReturn } = require('./utils/renderUtil')
@@ -48,11 +49,29 @@ function translateToFunctionComp(classCompInStr) {
 
 //THIS FUNCTION TAKES CREATED STRING AND WRITES A FILE
 function createFunctionComponentFile(funcCompInStr) {
-  fs.writeFile('proof.js', funcCompInStr, (err) => {
-    if (err) throw err
-    console.log('Made proof.js')
-  })
+  fs.writeFile(
+    __dirname + '/../proof/proof.js', //this will be modified later on to handle the file's name and relative path
+    funcCompInStr,
+    (err, contents) => {
+      //creates proof.js in proof directory
+      if (err) throw err
+      console.log('Made proof.js')
+    }
+  )
 }
 
-const finalStr = translateToFunctionComp(str1) //this is where you test
+//THIS FUNCTION TAKES FILEPATH, READS FILE AT PATH AND THEN CREATES
+//FUNCTIONAL COMPONENT EQUIVALENT
+async function readAndCreate(filepath) {
+  const content = await fs.promises.readFile(filepath, 'utf-8')
+  //DO NOTE USE readFileSync
+  const funcComponent = translateToFunctionComp(content)
+  createFunctionComponentFile(funcComponent)
+}
+
+//TESTING WITH READING A FILE
+readAndCreate(__dirname + '/../client/app.js')
+
+//TESTING WITHOUT READING FILE
+const finalStr = translateToFunctionComp(str0) //change which string to test
 createFunctionComponentFile(finalStr)
