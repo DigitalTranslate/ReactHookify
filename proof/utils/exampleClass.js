@@ -15,6 +15,14 @@ class    testApp extends Component {
 
   }
 
+  genericMethod2     () {
+
+  }
+
+  genericMethod() {
+
+  }
+
   render() {
     return <div>{array[1]}</div>
   }
@@ -92,10 +100,12 @@ class    testApp extends Component {
 export something
 `;
 
+
 module.exports = {
   str0,
   str1,
   str2,
   str3,
   str4,
+
 };
