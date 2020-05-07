@@ -2,8 +2,8 @@ const { str0, str1, str2, str3 } = require('./utils/exampleClass');
 const { handleConstructor } = require('./utils/constructorUtil');
 const fs = require('fs');
 const {
+  getBodyMethods,
   getBody,
-  getBetween,
   getEndIdxOfFunc,
   getInsideOfFunc,
   validBraces,
@@ -15,16 +15,23 @@ const { getBeforeReturn } = require('./utils/renderUtil');
 function translateToFunctionComp(classCompInStr) {
   const nameOfClass = getClassName(classCompInStr);
   const propsCheck = classCompInStr.includes('props') ? 'props' : '';
+  let startOfBodyIdx = classCompInStr.indexOf('{') + 1;
 
-  const handledConstructor = handleConstructor(classCompInStr);
-  const constructorEndIdx = getEndIdxOfFunc(classCompInStr, 'constructor');
-  const betweenConstructorAndRender = getBetween(
-    classCompInStr,
-    constructorEndIdx
-  );
+  const constructorCheck = /(constructor)[ ]*\(/.test(classCompInStr);
+  let handledConstructor = '';
+
+  if (constructorCheck) {
+    handledConstructor = handleConstructor(classCompInStr);
+    startOfBodyIdx = getEndIdxOfFunc(classCompInStr, 'constructor');
+  }
+
+  let body = getBody(classCompInStr, startOfBodyIdx);
+
   let funcs = [];
   let pointer = 0;
-  getBody(funcs, pointer, betweenConstructorAndRender);
+  getBodyMethods(funcs, pointer, body);
+
+  console.log('FUNCS', funcs);
 
   const funcCheck = funcs.length ? true : false;
 
