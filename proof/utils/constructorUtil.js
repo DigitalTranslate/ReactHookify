@@ -4,12 +4,13 @@ const { getInsideOfFunc } = require('./commonUtils')
 function handleConstructor(fullClassStr) {
   const constructorInside = getInsideOfFunc(fullClassStr, 'constructor')
   const stateInsides = getInsideOfFunc(constructorInside, 'this.state')
-  if (!stateInsides) return
+  if (!stateInsides) return ''
   const arrOfStates = stateInsides
     .split(',')
     .map((singleState) => singleState.trim().split(':'))
   //arrOfStates = [ [ 'counter', ' 0' ], [ 'open', ' false' ], [ 'closed', ' true' ] ]
-  return arrOfStates
+
+  const handledConstructor = arrOfStates
     .map(
       (singleState) =>
         `const [${singleState[0]}, set${
@@ -17,6 +18,7 @@ function handleConstructor(fullClassStr) {
         }] = useState(${singleState[1].trim()})`
     )
     .join('\n')
+  return handledConstructor
 }
 
 module.exports = {
