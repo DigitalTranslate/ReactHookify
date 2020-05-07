@@ -28,10 +28,7 @@ function translateToFunctionComp(classCompInStr) {
   let body = getBody(classCompInStr, startOfBodyIdx);
 
   let funcs = [];
-  let pointer = 0;
-  getBodyMethods(funcs, pointer, body);
-
-  console.log('FUNCS', funcs);
+  getBodyMethods(funcs, body);
 
   const funcCheck = funcs.length ? true : false;
 

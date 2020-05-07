@@ -1,8 +1,30 @@
-function TestApp(props) {
+function testApp() {
+    const [counter, setcounter] = useState(0)
+const [open, setopen] = useState(false)
+const [closed, setclosed] = useState(true)
     
+function componentDidMount() {
+      
+
+ 
+    }
+function ANOTHERgenericMethod() {
+      
+
+ 
+    }
+function genericMethod() {
+      
+
+ 
+    }
+function genericMethod2() {
+      
+
+ 
+    }
+
     
-    const hello = [];
-    const thing = props.thing
     return (
       <div>{array[1]}</div>
     )
