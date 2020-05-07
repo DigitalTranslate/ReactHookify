@@ -26,9 +26,10 @@ function validBraces(braces) {
   }
   return stack.length === 0; // any unclosed braces left?
 }
+
 function getInsideOfFunc(string, methodStr) {
-  let startIdx = funcNameStartIdx(string, methodStr);
-  if (startIdx === undefined) return;
+  let startIdx = string.indexOf(methodStr);
+  if (startIdx === -1) return;
   startIdx = string.indexOf('{', startIdx);
   let endIdx = startIdx + 1;
 
@@ -37,14 +38,16 @@ function getInsideOfFunc(string, methodStr) {
     endIdx++;
     funcSlice = string.slice(startIdx, endIdx);
   }
-
-  funcSlice = funcSlice
-    .slice(funcSlice.indexOf('return') + 6, funcSlice.length - 2)
-    .trim();
-  return funcSlice;
+  if (funcSlice.indexOf('return') > -1) {
+    return funcSlice
+      .slice(funcSlice.indexOf('return') + 6, funcSlice.length - 2)
+      .trim();
+  } else {
+    return funcSlice.slice(1, funcSlice.length - 2);
+  }
 }
 function getEndIdxOfFunc(string, methodStr) {
-  let startIdx = funcNameStartIdx(string, methodStr);
+  let startIdx = string.indexOf(methodStr);
   if (startIdx === undefined) return;
   startIdx = string.indexOf('{', startIdx);
   let endIdx = startIdx + 1;
@@ -60,70 +63,26 @@ function getBody(string, startIdx) {
   return string.slice(startIdx, endIdx).trim();
 }
 
-function getBodyMethods(funcs, pointer, bodyStr) {
-  while (pointer < bodyStr.length) {
-    let parenIdx = bodyStr.indexOf('(', pointer);
-    let funcStartIdx = pointer;
-    while (bodyStr[funcStartIdx] === ' ' || bodyStr[funcStartIdx] === '\n') {
-      funcStartIdx++;
-    }
-    let funcName = bodyStr.slice(funcStartIdx, parenIdx);
-    let inside = getInsideOfFunc(bodyStr, `${funcName}`);
-    pointer = getEndIdxOfFunc(bodyStr, `${funcName}`);
-    let funcStringified = `function ${funcName.trim()}() {
+function getBodyMethods(funcs, bodyStr) {
+  // find first non-white space (aka function starting index)
+  let nonWhiteSpaceIdx = bodyStr.search(/\S/);
+  if (nonWhiteSpaceIdx === -1) {
+    return;
+  }
+  let newBody = bodyStr.substring(nonWhiteSpaceIdx);
+  let funcEndIdx = newBody.search(/[^a-zA-Z0-9_]/); // find function name ending index
+  let funcName = newBody.slice(0, funcEndIdx);
+  let inside = getInsideOfFunc(bodyStr, `${funcName}`);
+  let endOfFuncIdx = getEndIdxOfFunc(bodyStr, `${funcName}`);
+  newBody = bodyStr.substring(endOfFuncIdx);
+
+  let funcStringified = `function ${funcName}() {
       ${inside}
     }`;
-
-    if (funcName.toLowerCase() !== 'render') {
-      funcs.push(funcStringified);
-    }
+  if (funcName.toLowerCase() !== 'render') {
+    funcs.push(funcStringified);
   }
-}
-
-// let testBody = 'React.Component   ';
-// let testBody2 = 'React.Component2   ';
-// let testBody3 = 'hComponent   Component ';
-// let testBody4 = 'Component';
-// let testMethod = 'Component';
-// console.log(funcNameStartIdx(testBody4, testMethod));
-
-function funcNameStartIdx(string, methodStr) {
-  // console.log(string);
-  // console.log(methodStr);
-  let startIdx = string.indexOf(methodStr);
-  if (startIdx === -1) return undefined;
-  let endIdx = minBesidesNegOne(
-    string.indexOf('(', startIdx),
-    string.indexOf(' ', startIdx)
-  );
-
-  // console.log(startIdx);
-  // console.log(/[a-z]/i.test(string[startIdx - 1]));
-  // while (
-  //   /[a-z]/i.test(string[startIdx - 1]) ||
-  //   string.slice(startIdx, endIdx) !== methodStr.trim()
-  // )
-
-  while (string.slice(startIdx, endIdx) !== methodStr.trim()) {
-    // console.log(/[a-z]/i.test(string[startIdx - 1]));
-    startIdx = string.indexOf(methodStr, endIdx);
-    // console.log(startIdx);
-    endIdx = minBesidesNegOne(
-      string.indexOf('(', startIdx),
-      string.indexOf(' ', startIdx)
-    );
-  }
-  return startIdx;
-}
-
-function minBesidesNegOne(num1, num2) {
-  if (num1 === -1) {
-    return num2;
-  } else if (num2 === -1) {
-    return num1;
-  } else {
-    return Math.min(num1, num2);
-  }
+  getBodyMethods(funcs, newBody);
 }
 
 module.exports = {
