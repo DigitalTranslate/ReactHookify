@@ -15,11 +15,14 @@ class    testApp extends Component {
 
   }
 
-  genericMethod2() {
+  ANOTHERgenericMethod() {
 
   }
 
-  genericMethod() {
+  genericMethod  () {
+
+  }
+  genericMethod2  () {
 
   }
 
