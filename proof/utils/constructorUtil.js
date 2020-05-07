@@ -2,6 +2,7 @@ const { getInsideOfFunc } = require('./commonUtils');
 
 //THIS FUNCTION TRANSLATES CONTENTS OF CONSTRUCTOR
 function handleConstructor(fullClassStr) {
+
   let constructorInside = getInsideOfFunc(fullClassStr, 'constructor');
   let stateInsides;
   if (constructorInside.includes('this.state')) {
@@ -13,14 +14,16 @@ function handleConstructor(fullClassStr) {
     .split(',')
     .map((singleState) => singleState.trim().split(':'));
   //arrOfStates = [ [ 'counter', ' 0' ], [ 'open', ' false' ], [ 'closed', ' true' ] ]
-  return arrOfStates
+  const handledConstructor = arrOfStates
     .map(
       (singleState) =>
         `const [${singleState[0]}, set${
           singleState[0]
         }] = useState(${singleState[1].trim()})`
     )
-    .join('\n');
+    .join('\n')
+  return handledConstructor
+
 }
 
 module.exports = {
