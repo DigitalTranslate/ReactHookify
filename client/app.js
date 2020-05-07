@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 export default class App extends Component {
   constructor() {
-    super();
-    this.state = { name: 'bob' };
+    super()
+    this.state = { name: 'bob' }
   }
   componentDidMount() {
-    return 'hi';
+    return 'hi'
   }
 
   render() {
-    return <div>hi</div>;
+    return <div>hi</div>
   }
 }
