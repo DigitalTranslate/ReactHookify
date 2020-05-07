@@ -4,6 +4,7 @@ const { getInsideOfFunc } = require('./commonUtils')
 function handleConstructor(fullClassStr) {
   const constructorInside = getInsideOfFunc(fullClassStr, 'constructor')
   const stateInsides = getInsideOfFunc(constructorInside, 'this.state')
+  if (!stateInsides) return
   const arrOfStates = stateInsides
     .split(',')
     .map((singleState) => singleState.trim().split(':'))
