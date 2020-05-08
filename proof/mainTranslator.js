@@ -57,11 +57,9 @@ function translateToFunctionComp(classCompInStr) {
 //THIS FUNCTION TAKES CREATED STRING AND WRITES A FILE
 function createFunctionComponentFile(funcCompInStr, filepath) {
   const newPath = hookifyPath(filepath)
-
-  fs.writeFile(newPath, funcCompInStr, (err, contents) => {
-    //creates proof.js in proof directory
+  fs.writeFile(newPath, funcCompInStr, (err) => {
     if (err) throw err
-    console.log(yellow('Made proof.js'))
+    console.log(yellow('Created Hookified File'))
   })
 }
 
@@ -73,6 +71,10 @@ async function readAndCreate(filepath) {
   const funcComponent = translateToFunctionComp(content)
   createFunctionComponentFile(funcComponent, filepath)
 }
+
+/*
+TESTING
+*/
 
 //TESTING WITH READING A FILE && CAN DO WITH CLI NOW
 // readAndCreate(__dirname + '/../client/app.js')
