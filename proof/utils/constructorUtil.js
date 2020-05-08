@@ -13,8 +13,6 @@ function handleConstructor(fullClassStr) {
     //might need to get tricky to handle commas in objects inside of state
     .split(/,(?=\s+\S+:)/)
     .map((singleState) => singleState.trim().split(':'))
-    .filter((singleState) => singleState.length > 1) //filter is to handle hanging commas after the last state entry
-  console.log(arrOfStates)
   const handledConstructor = arrOfStates
     .map(
       (singleState) =>
