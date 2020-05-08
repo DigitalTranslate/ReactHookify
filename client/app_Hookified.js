@@ -3,6 +3,10 @@ function App() {
   const [lastName, setLastName] = useState("snob");
   const [friends, setFriends] = useState(["joe", "shmoe"]);
 
+  useEffect(() => {
+    document.title = firstName;
+  });
+
   function otherGenericMethod2() {
     const excitingVariable = 23;
     console.log("hello world");

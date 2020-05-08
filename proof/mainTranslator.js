@@ -11,6 +11,11 @@ const {
   getInsideOfFunc,
   getClassName,
 } = require('./utils/commonUtils')
+const {
+  findComponents,
+  createUseEffect,
+  createMultipleUseEffects,
+} = require('./utils/lifecycleUtils')
 const { getBeforeReturn } = require('./utils/renderUtil')
 const { yellow } = require('chalk')
 const prettier = require('prettier')
@@ -31,12 +36,18 @@ function translateToFunctionComp(classCompInStr) {
     startOfBodyIdx = getEndIdxOfFunc(classCompInStr, 'constructor')
   }
 
-  //BODY
+  //BODY && LIFE CYCLE METHODS
   let body = getBody(classCompInStr, startOfBodyIdx)
 
   let funcs = []
-  getBodyMethods(funcs, body)
+  const lifeCyclesObj = findComponents(body)
+  const numberOfKeys = Object.keys(lifeCyclesObj)
+  const arrOfUseEffects = createMultipleUseEffects(lifeCyclesObj)
 
+  getBodyMethods(funcs, body)
+  numberOfKeys.forEach(() => funcs.shift())
+
+  const lifeCycleCheck = arrOfUseEffects.length ? true : false
   const funcCheck = funcs.length ? true : false
 
   //RETURN STATEMENT
@@ -46,6 +57,7 @@ function translateToFunctionComp(classCompInStr) {
   //FINAL TEMPLATE
   let finalStr = `function ${nameOfClass}(${propsCheck}) {
     ${handledConstructor}
+    ${lifeCycleCheck ? `\n${arrOfUseEffects.join('\n')}\n` : ''}
     ${funcCheck ? `\n${funcs.join('\n')}\n` : ''}
     ${beforeReturn}
     return (
