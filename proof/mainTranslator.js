@@ -11,8 +11,14 @@ const {
   getInsideOfFunc,
   getClassName,
 } = require('./utils/commonUtils')
+const {
+  findComponents,
+  createUseEffect,
+  createMultipleUseEffects,
+} = require('./utils/lifecycleUtils')
 const { getBeforeReturn } = require('./utils/renderUtil')
 const { yellow } = require('chalk')
+const prettier = require('prettier')
 
 //THIS FUNCTION IS IN CHARGE OF TRANSLATING CLASS COMPONENT TO FUNCTIONAL COMPONENT && PUTS IT ALL TOGETHER
 function translateToFunctionComp(classCompInStr) {
@@ -30,12 +36,18 @@ function translateToFunctionComp(classCompInStr) {
     startOfBodyIdx = getEndIdxOfFunc(classCompInStr, 'constructor')
   }
 
-  //BODY
+  //BODY && LIFE CYCLE METHODS
   let body = getBody(classCompInStr, startOfBodyIdx)
 
   let funcs = []
-  getBodyMethods(funcs, body)
+  const lifeCyclesObj = findComponents(body)
+  const numberOfKeys = Object.keys(lifeCyclesObj)
+  const arrOfUseEffects = createMultipleUseEffects(lifeCyclesObj)
 
+  getBodyMethods(funcs, body)
+  numberOfKeys.forEach(() => funcs.shift())
+
+  const lifeCycleCheck = arrOfUseEffects.length ? true : false
   const funcCheck = funcs.length ? true : false
 
   //RETURN STATEMENT
@@ -45,6 +57,7 @@ function translateToFunctionComp(classCompInStr) {
   //FINAL TEMPLATE
   let finalStr = `function ${nameOfClass}(${propsCheck}) {
     ${handledConstructor}
+    ${lifeCycleCheck ? `\n${arrOfUseEffects.join('\n')}\n` : ''}
     ${funcCheck ? `\n${funcs.join('\n')}\n` : ''}
     ${beforeReturn}
     return (
@@ -57,11 +70,9 @@ function translateToFunctionComp(classCompInStr) {
 //THIS FUNCTION TAKES CREATED STRING AND WRITES A FILE
 function createFunctionComponentFile(funcCompInStr, filepath) {
   const newPath = hookifyPath(filepath)
-
-  fs.writeFile(newPath, funcCompInStr, (err, contents) => {
-    //creates proof.js in proof directory
+  fs.writeFile(newPath, prettier.format(funcCompInStr), (err) => {
     if (err) throw err
-    console.log(yellow('Made proof.js'))
+    console.log(yellow('Created Hookified File'))
   })
 }
 
@@ -74,11 +85,15 @@ async function readAndCreate(filepath) {
   createFunctionComponentFile(funcComponent, filepath)
 }
 
+/*
+TESTING
+*/
+
 //TESTING WITH READING A FILE && CAN DO WITH CLI NOW
 // readAndCreate(__dirname + '/../client/app.js')
 
 //TESTING WITHOUT READING FILE
-const finalStr = translateToFunctionComp(str0) //change which string to test
+// const finalStr = translateToFunctionComp(str0) //change which string to test
 // createFunctionComponentFile(finalStr, '/client/proof.js')
 
 module.exports = {
