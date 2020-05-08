@@ -13,6 +13,7 @@ const {
 } = require('./utils/commonUtils')
 const { getBeforeReturn } = require('./utils/renderUtil')
 const { yellow } = require('chalk')
+const prettier = require('prettier')
 
 //THIS FUNCTION IS IN CHARGE OF TRANSLATING CLASS COMPONENT TO FUNCTIONAL COMPONENT && PUTS IT ALL TOGETHER
 function translateToFunctionComp(classCompInStr) {
@@ -57,7 +58,7 @@ function translateToFunctionComp(classCompInStr) {
 //THIS FUNCTION TAKES CREATED STRING AND WRITES A FILE
 function createFunctionComponentFile(funcCompInStr, filepath) {
   const newPath = hookifyPath(filepath)
-  fs.writeFile(newPath, funcCompInStr, (err) => {
+  fs.writeFile(newPath, prettier.format(funcCompInStr), (err) => {
     if (err) throw err
     console.log(yellow('Created Hookified File'))
   })
@@ -80,7 +81,7 @@ TESTING
 // readAndCreate(__dirname + '/../client/app.js')
 
 //TESTING WITHOUT READING FILE
-const finalStr = translateToFunctionComp(str0) //change which string to test
+// const finalStr = translateToFunctionComp(str0) //change which string to test
 // createFunctionComponentFile(finalStr, '/client/proof.js')
 
 module.exports = {

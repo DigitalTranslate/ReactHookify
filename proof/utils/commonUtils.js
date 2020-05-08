@@ -1,4 +1,12 @@
 /* eslint-disable no-lonely-if */
+function capitalize(str) {
+  //input 'dog'
+  const firstLeter = str[0].toUpperCase()
+  const newStr = firstLeter + str.slice(1, str.length)
+  return newStr
+  //output 'Dog'
+}
+
 function hookifyPath(pathStr) {
   /*   '/public/client/app.js'    */
   let finalPath = pathStr
@@ -97,6 +105,7 @@ function getBodyMethods(funcs, bodyStr) {
 }
 
 module.exports = {
+  capitalize,
   hookifyPath,
   getBodyMethods,
   getBody,

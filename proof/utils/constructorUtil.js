@@ -1,4 +1,4 @@
-const { getInsideOfFunc } = require('./commonUtils')
+const { getInsideOfFunc, capitalize } = require('./commonUtils')
 
 //THIS FUNCTION TRANSLATES CONTENTS OF CONSTRUCTOR
 function handleConstructor(fullClassStr) {
@@ -10,15 +10,17 @@ function handleConstructor(fullClassStr) {
     return ''
   }
   const arrOfStates = stateInsides
-    .split(',')
+    //might need to get tricky to handle commas in objects inside of state
+    .split(/,(?=\s+\S+:)/)
     .map((singleState) => singleState.trim().split(':'))
-  //arrOfStates = [ [ 'counter', ' 0' ], [ 'open', ' false' ], [ 'closed', ' true' ] ]
+    .filter((singleState) => singleState.length > 1) //filter is to handle hanging commas after the last state entry
+  console.log(arrOfStates)
   const handledConstructor = arrOfStates
     .map(
       (singleState) =>
-        `const [${singleState[0]}, set${
+        `const [${singleState[0]}, set${capitalize(
           singleState[0]
-        }] = useState(${singleState[1].trim()})`
+        )}] = useState(${singleState[1].trim()})`
     )
     .join('\n')
   return handledConstructor
