@@ -1,2 +1,5 @@
 -Right now, we have to make sure the word 'class' is not used before the class component
 -props check is checking the whole file for the word 'props' not just the component
+-comments between methods
+-prettier semicolons
+-method arguments
