@@ -2,7 +2,7 @@
   "name": "reacthookify",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "proof/mainTranslator.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server",
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/DigitalTranslate/ReactHookify#readme",
   "dependencies": {
     "chalk": "^4.0.0",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

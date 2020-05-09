@@ -1,9 +1,24 @@
 function App() {
-  const [name, setName] = useState("bob");
+  const [firstName, setFirstName] = useState("bob, dog");
+  const [lastName, setLastName] = useState("snob");
+  const [friends, setFriends] = useState(["joe", "shmoe"]);
 
   useEffect(() => {
-    "hi";
+    document.title = firstName;
   });
 
-  return <div>hi</div>;
+  function otherGenericMethod2() {
+    const excitingVariable = 23;
+    console.log("hello world");
+  }
+  function genericMethod() {
+    const dullVariable = 24;
+    console.log("hi world");
+  }
+
+  return (
+    <div className="simple">
+      <div>hi</div>
+    </div>
+  );
 }
