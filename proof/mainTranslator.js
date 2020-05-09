@@ -10,6 +10,8 @@ const {
   getEndIdxOfFunc,
   getInsideOfFunc,
   getClassName,
+  getClassCompIdx,
+  getClassComp,
 } = require('./utils/commonUtils')
 const {
   findComponents,
@@ -21,23 +23,29 @@ const { yellow } = require('chalk')
 const prettier = require('prettier')
 
 //THIS FUNCTION IS IN CHARGE OF TRANSLATING CLASS COMPONENT TO FUNCTIONAL COMPONENT && PUTS IT ALL TOGETHER
-function translateToFunctionComp(classCompInStr) {
-  const nameOfClass = getClassName(classCompInStr)
+function translateToFunctionComp(fileInString) {
+  // Class name and start of Component
+  const classCompIdx = getClassCompIdx(fileInString)
+  const beforeClass = fileInString.slice(0, classCompIdx)
+  const nameOfClass = getClassName(fileInString, classCompIdx)
+  const classCompInString = getClassComp(fileInString, classCompIdx)
+  const afterClass = fileInString.slice(classCompIdx + classCompInString.length)
+  let startOfBodyIdx = classCompInString.indexOf('{') + 1
+
   //checks whole class string from 'props'
-  const propsCheck = classCompInStr.includes('props') ? 'props' : ''
-  let startOfBodyIdx = classCompInStr.indexOf('{') + 1
+  const propsCheck = classCompInString.includes('props') ? 'props' : ''
 
   //CONSTRUCTOR
-  const constructorCheck = /(constructor)[ ]*\(/.test(classCompInStr)
+  const constructorCheck = /(constructor)[ ]*\(/.test(classCompInString)
   let handledConstructor = ''
 
   if (constructorCheck) {
-    handledConstructor = handleConstructor(classCompInStr)
-    startOfBodyIdx = getEndIdxOfFunc(classCompInStr, 'constructor')
+    handledConstructor = handleConstructor(classCompInString)
+    startOfBodyIdx = getEndIdxOfFunc(classCompInString, 'constructor')
   }
 
   //BODY && LIFE CYCLE METHODS
-  let body = getBody(classCompInStr, startOfBodyIdx)
+  let body = getBody(classCompInString, startOfBodyIdx)
 
   let funcs = []
   const lifeCyclesObj = findComponents(body)
@@ -51,11 +59,13 @@ function translateToFunctionComp(classCompInStr) {
   const funcCheck = funcs.length ? true : false
 
   //RETURN STATEMENT
-  const beforeReturn = getBeforeReturn(classCompInStr)
-  const returnSlice = getInsideOfFunc(classCompInStr, 'render')
+  const beforeReturn = getBeforeReturn(classCompInString)
+  const returnSlice = getInsideOfFunc(classCompInString, 'render')
 
   //FINAL TEMPLATE
-  let finalStr = `function ${nameOfClass}(${propsCheck}) {
+  let finalStr = `
+  ${beforeClass}
+  function ${nameOfClass}(${propsCheck}) {
     ${handledConstructor}
     ${lifeCycleCheck ? `\n${arrOfUseEffects.join('\n')}\n` : ''}
     ${funcCheck ? `\n${funcs.join('\n')}\n` : ''}
@@ -63,7 +73,8 @@ function translateToFunctionComp(classCompInStr) {
     return (
       ${returnSlice}
     )
-  }`
+  }
+  ${afterClass}`
   return finalStr.replace(/this.props/gi, 'props')
 }
 
