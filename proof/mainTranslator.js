@@ -90,7 +90,7 @@ TESTING
 */
 
 //TESTING WITH READING A FILE && CAN DO WITH CLI NOW
-readAndCreate(__dirname + '/../client/app.js')
+// readAndCreate(__dirname + '/../client/app.js')
 
 //TESTING WITHOUT READING FILE
 // const finalStr = translateToFunctionComp(str0) //change which string to test

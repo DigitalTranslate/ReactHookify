@@ -14,7 +14,7 @@ function handleConstructor(fullClassStr) {
     //the logic to handle non-empty objects in state is tough!
     if (stateInsides.includes('{')) {
       //extracts and stores all the objects to plug back in later
-      stateInsides = storeAndReplaceObjects(stateInsides, 0, storage)
+      stateInsides = storeAndReplaceObjects(stateInsides, storage)
     }
   } else {
     return ''
@@ -46,7 +46,9 @@ function handleConstructor(fullClassStr) {
   return handledConstructor
 }
 
-function storeAndReplaceObjects(stateInsides, idx, storage) {
+//this helper function is in charge of storing objects from state
+//for better parsing
+function storeAndReplaceObjects(stateInsides, storage) {
   if (!stateInsides.includes('{')) {
     return stateInsides
   } else {
@@ -59,10 +61,9 @@ function storeAndReplaceObjects(stateInsides, idx, storage) {
     }
     let objToStore = funcSlice.slice(0, funcSlice.length)
     storage.push(objToStore)
-    //push to storage here
-    let newState = stateInsides.replace(objToStore, `${idx}|?$|props`)
-    idx++
-    return storeAndReplaceObjects(newState, idx, storage)
+    let newState = stateInsides.replace(objToStore, `|?$|props`)
+
+    return storeAndReplaceObjects(newState, storage)
   }
 }
 
