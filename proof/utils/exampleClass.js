@@ -1,6 +1,6 @@
 const str0 = `import statement
 
-class    testApp extends Component {
+class    testApp extends React.Component {
 
   constructor() {
     super()

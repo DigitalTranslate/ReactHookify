@@ -9,9 +9,16 @@ function hookifyPath(pathStr) {
   /*   '/public/client/app_HOOKIFIED.js'    */
 }
 
-// returns the index of the word 'class' for the class Component
+// returns the index for the start of the class component
 function getClassCompIdx(string) {
-  return string.search(/(class)([ \t]+)([\S]+)([ \t]+)(extends)/)
+  return string.search(/(class)([ \t]+)([\S]+)([ \t]+)(extends)/i)
+}
+
+// returns a slice of the whole class Component (removing everything above and below it)
+function getClassComp(string, startIdx) {
+  let stringSlice = string.slice(startIdx)
+  let endIdxOfClassComp = getEndIdxOfFunc(stringSlice, 'Component')
+  return stringSlice.slice(0, endIdxOfClassComp)
 }
 
 // Returns the name of the class
@@ -126,4 +133,5 @@ module.exports = {
   validBraces,
   getClassName,
   getClassCompIdx,
+  getClassComp,
 }

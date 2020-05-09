@@ -1,12 +1,9 @@
 function App() {
-    const [name, setname] = useState('bob')
-    
-function componentDidMount() {
-      'hi'
-    }
+  const [name, setName] = useState("bob");
 
-    
-    return (
-      <div>hi</div>
-    )
-  }
+  useEffect(() => {
+    "hi";
+  });
+
+  return <div>hi</div>;
+}
