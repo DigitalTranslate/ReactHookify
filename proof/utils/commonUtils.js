@@ -111,11 +111,12 @@ function getBodyMethods(funcs, bodyStr) {
   let newBody = bodyStr.substring(nonWhiteSpaceIdx)
   let funcEndIdx = newBody.search(/[^a-zA-Z0-9_]/) // find function name ending index
   let funcName = newBody.slice(0, funcEndIdx)
+  let funcArgs = newBody.slice(newBody.indexOf('(') + 1, newBody.indexOf(')'))
   let inside = getInsideOfFunc(bodyStr, `${funcName}`)
   let endOfFuncIdx = getEndIdxOfFunc(bodyStr, `${funcName}`)
   newBody = bodyStr.substring(endOfFuncIdx)
 
-  let funcStringified = `function ${funcName}() {
+  let funcStringified = `function ${funcName}(${funcArgs}) {
       ${inside}
     }`
   if (funcName.toLowerCase() !== 'render') {

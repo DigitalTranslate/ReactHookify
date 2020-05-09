@@ -11,11 +11,11 @@ class    testApp extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount(arg1) {
 
   }
 
-  ANOTHERgenericMethod() {
+  ANOTHERgenericMethod(arg2) {
 
   }
 
