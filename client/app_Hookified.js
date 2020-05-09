@@ -1,7 +1,12 @@
 function App() {
-  const [firstName, setFirstName] = useState("bob, dog");
+  const [firstName, setFirstName] = useState("bobdog");
   const [lastName, setLastName] = useState("snob");
   const [friends, setFriends] = useState(["joe", "shmoe"]);
+  const [cats, setCats] = useState({});
+  const [kangaroo, setKangaroo] = useState({
+    2: "Number!",
+    name: "Jacki",
+  });
 
   useEffect(() => {
     document.title = firstName;
