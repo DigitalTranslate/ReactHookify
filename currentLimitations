@@ -1,3 +1,2 @@
--comments between methods
+-comments within the class component are removed
 -prettier semicolons
--method arguments

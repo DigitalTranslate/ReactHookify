@@ -15,9 +15,13 @@ class    testApp extends React.Component {
 
   }
 
+  // comment 1
+
   ANOTHERgenericMethod(arg2) {
 
   }
+
+  /* comment 2 */
 
   genericMethod  () {
 

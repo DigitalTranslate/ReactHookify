@@ -104,25 +104,43 @@ function getBody(string, startIdx) {
 // Example output: ['componentDidMount() { const x = 5 }', 'method2() { const y = 6 }']
 function getBodyMethods(funcs, bodyStr) {
   // find first non-white space (aka function starting index)
-  let nonWhiteSpaceIdx = bodyStr.search(/\S/)
-  if (nonWhiteSpaceIdx === -1) {
+  let nextFuncIdx = bodyStr.search(/\S/)
+  if (nextFuncIdx === -1) {
     return
   }
-  let newBody = bodyStr.substring(nonWhiteSpaceIdx)
-  let funcEndIdx = newBody.search(/[^a-zA-Z0-9_]/) // find function name ending index
-  let funcName = newBody.slice(0, funcEndIdx)
-  let funcArgs = newBody.slice(newBody.indexOf('(') + 1, newBody.indexOf(')'))
-  let inside = getInsideOfFunc(bodyStr, `${funcName}`)
-  let endOfFuncIdx = getEndIdxOfFunc(bodyStr, `${funcName}`)
-  newBody = bodyStr.substring(endOfFuncIdx)
 
-  let funcStringified = `function ${funcName}(${funcArgs}) {
+  let newBody = bodyStr.substring(nextFuncIdx)
+
+  // if we find a comment, need to skip over it!
+  // comment type: //
+  if (newBody.slice(0, 2) === '//') {
+    let newStartIdx = newBody.indexOf('\n') + 1
+    newBody = newBody.substring(newStartIdx)
+    getBodyMethods(funcs, newBody)
+  }
+  // comment type: /*   */
+  else if (newBody.slice(0, 2) === '/*') {
+    let newStartIdx = newBody.indexOf('*/') + 2
+    newBody = newBody.substring(newStartIdx)
+    getBodyMethods(funcs, newBody)
+  }
+  // if we find an actual method:
+  else {
+    let funcEndIdx = newBody.search(/[^a-zA-Z0-9_]/) // find function name ending index
+    let funcName = newBody.slice(0, funcEndIdx)
+    let funcArgs = newBody.slice(newBody.indexOf('(') + 1, newBody.indexOf(')'))
+    let inside = getInsideOfFunc(bodyStr, `${funcName}`)
+    let endOfFuncIdx = getEndIdxOfFunc(bodyStr, `${funcName}`)
+    newBody = bodyStr.substring(endOfFuncIdx)
+
+    let funcStringified = `function ${funcName}(${funcArgs}) {
       ${inside}
     }`
-  if (funcName.toLowerCase() !== 'render') {
-    funcs.push(funcStringified)
+    if (funcName.toLowerCase() !== 'render') {
+      funcs.push(funcStringified)
+    }
+    getBodyMethods(funcs, newBody)
   }
-  getBodyMethods(funcs, newBody)
 }
 
 module.exports = {
