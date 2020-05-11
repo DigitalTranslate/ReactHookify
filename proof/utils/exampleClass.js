@@ -77,12 +77,52 @@ class    testApp extends Component {
     document.title = this.state.counter;
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.counter <= 10) {
     document.title = this.state.counter;
+    }
   }
 
   componentWillUnmount() {
     document.title = this.state.counter;
+  }
+
+  render() {
+    return <div>{array[1]}</div>
+  }
+}
+export something
+`;
+
+let str5 = `import statement
+
+class    testApp extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      counter: 0,
+      open: false,
+      closed: true
+    }
+  }
+
+  componentDidMount() {
+    this.setState({counter: 1})
+    document.title = You clicked {this.state.count} times;
+  }
+
+  componentDidUpdate() {
+    if(this.state.counter > 10){
+    document.title = You clicked {this.state.count} times;
+    }
+  }
+
+  componentWillUnmount() {
+    ChatAPI.unsubscribeFromFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
   }
 
   render() {
@@ -98,4 +138,5 @@ module.exports = {
   str2,
   str3,
   str4,
+  str5,
 };
