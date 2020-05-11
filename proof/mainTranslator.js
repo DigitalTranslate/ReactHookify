@@ -64,7 +64,7 @@ function translateToFunctionComp(classCompInStr) {
       ${returnSlice}
     )
   }`
-  return finalStr.replace(/this.props/gi, 'props')
+  return finalStr.replace(/this.props/gi, 'props').replace(/this.state/gi, '')
 }
 
 //THIS FUNCTION TAKES CREATED STRING AND WRITES A FILE
