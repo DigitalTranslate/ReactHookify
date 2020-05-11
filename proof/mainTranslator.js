@@ -79,10 +79,14 @@ function createFunctionComponentFile(funcCompInStr, filepath) {
 //THIS FUNCTION TAKES FILEPATH, READS FILE AT PATH AND THEN CREATES
 //FUNCTIONAL COMPONENT EQUIVALENT
 async function readAndCreate(filepath) {
-  const content = await fs.promises.readFile(filepath, 'utf-8')
-  //DO NOTE USE readFileSync
-  const funcComponent = translateToFunctionComp(content)
-  createFunctionComponentFile(funcComponent, filepath)
+  try {
+    const content = await fs.promises.readFile(filepath, 'utf-8')
+    //DO NOTE USE readFileSync
+    const funcComponent = translateToFunctionComp(content)
+    createFunctionComponentFile(funcComponent, filepath)
+  } catch (error) {
+    console.log('Error reading file')
+  }
 }
 
 /*
