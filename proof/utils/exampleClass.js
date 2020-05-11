@@ -35,7 +35,7 @@ class    testApp extends React.Component {
   }
 }
 export something
-`
+`;
 
 let str1 = `
 import react from 'react'
@@ -54,7 +54,7 @@ class TestApp extends Component {
   }
 }
 export default TestApp
-`
+`;
 
 let str2 = `import statement
 class    testApp extends Component {
@@ -63,7 +63,7 @@ class    testApp extends Component {
   }
 }
 export something
-`
+`;
 
 let str3 = `
 import react from 'react'
@@ -75,7 +75,7 @@ class TestApp extends Component {
   }
 }
 export default TestApp
-`
+`;
 
 let str4 = `import statement
 
@@ -98,16 +98,15 @@ class    testApp extends Component {
     document.title = this.state.counter;
   }
 
-  componentWillUnmount() {
-    document.title = this.state.counter;
-  }
+ 
+
 
   render() {
     return <div>{array[1]}</div>
   }
 }
 export something
-`
+`;
 
 module.exports = {
   str0,
@@ -115,4 +114,4 @@ module.exports = {
   str2,
   str3,
   str4,
-}
+};
