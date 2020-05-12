@@ -1,13 +1,17 @@
+/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react'
 export default class App extends Component {
   constructor() {
     super()
     this.state = {
-      firstName: 'bob, dog',
-
+      firstName: 'bobdog',
       lastName: 'snob',
-
       friends: ['joe', 'shmoe'],
+      cats: {},
+      kangaroo: {
+        2: 'Number!',
+        name: 'Jacki',
+      },
     }
   }
 
