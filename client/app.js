@@ -63,7 +63,7 @@ export default class App extends Component {
           type="button"
           onClick={() =>
             this.setState({
-              count: this.state.count + 1,
+              count: this.state.count + 3,
               name: this.state.name,
             })
           }

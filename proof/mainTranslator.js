@@ -65,33 +65,41 @@ function translateToFunctionComp(classCompInStr) {
       ${returnSlice}
     )
   }`
-  finalStr = replaceSetState(finalStr)
-  return finalStr.replace(/this.props/gi, 'props').replace(/this.state./gi, '')
+
+  return replaceSetState(finalStr)
+    .replace(/this.props/gi, 'props')
+    .replace(/this.state./gi, '')
 }
 
 //THIS FUNCTION TAKES CREATED STRING AND WRITES A FILE
 function createFunctionComponentFile(funcCompInStr, filepath) {
   const newPath = hookifyPath(filepath)
-  fs.writeFile(newPath, prettier.format(funcCompInStr), (err) => {
-    if (err) throw err
-    console.log(yellow('Created Hookified File'))
-  })
+  fs.writeFile(
+    newPath,
+    prettier.format(funcCompInStr, { semi: false, parser: 'babel' }),
+    (err) => {
+      if (err) throw err
+      console.log(yellow('Created Hookified File'))
+    }
+  )
 }
 
 //THIS FUNCTION TAKES FILEPATH, READS FILE AT PATH AND THEN CREATES
 //FUNCTIONAL COMPONENT EQUIVALENT
 async function readAndCreate(filepath) {
   try {
-    const content = await fs.promises.readFile(filepath, 'utf-8')
-    // const unformattedContent = await fs.promises.readFile(filepath, 'utf-8')
+    // const content = await fs.promises.readFile(filepath, 'utf-8')
+    const unformattedContent = await fs.promises.readFile(filepath, 'utf-8')
 
     //DO NOTE USE readFileSync
-    // const content = prettier.format(unformattedContent)
+    const content = prettier.format(unformattedContent, {
+      semi: false,
+      parser: 'babel',
+    })
     const funcComponent = translateToFunctionComp(content)
-    // console.log(funcComponent)
     createFunctionComponentFile(funcComponent, filepath)
   } catch (error) {
-    console.log('Error reading file')
+    console.error(error)
   }
 }
 

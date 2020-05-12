@@ -18,6 +18,7 @@ function hookifyPath(pathStr) {
   /*   '/public/client/app_Hookified.js'    */
 }
 
+//replaces all instances of this.setState
 function replaceSetState(classAsString) {
   function escapeRegExp(string) {
     return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&')
@@ -25,6 +26,7 @@ function replaceSetState(classAsString) {
   let replacedStr = classAsString
 
   while (replacedStr.search(/(>)([ \t\n]*)(this.setState)/g) !== -1) {
+    //this whole while loop is to account for implicit returns
     let startIdx = replacedStr.search(/(>)([ \t\n]*)(this.setState)/g) + 1
 
     let openIdx = replacedStr.indexOf('(', startIdx)
@@ -59,15 +61,19 @@ function replaceSetState(classAsString) {
   return replacedStr
 }
 
-replaceSetState(
-  '() => this.setState({count: this.state.count + 1,name: this.state.name})'
-)
-
 function parseObjIntoArr(objInsides) {
-  //this helper function is in charge of storing objects from state
-  //for better parsing
+  /*
+INPUT:
+"firstName: 'bob',
+lastName: 'snob',
+friends: ['joe', 'shmoe'],"
+
+OUTPUT:
+[[firstName, 'bob'], [lastName, 'snob'], [friends, ['joe','shmoe']]]
+*/
   function storeNestedObjects(stateInsides, storage) {
     if (!stateInsides.includes('{')) {
+      //might need to be more specific here
       return stateInsides
     } else {
       const startIdx = stateInsides.indexOf('{')
