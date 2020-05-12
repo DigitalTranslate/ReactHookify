@@ -86,22 +86,37 @@ function checkMountAndUpdateForSimilarties(object) {
       );
 
       const bodyUpdateLineArray = componentDidUpdatebodyString.split(/\r?\n/);
+      console.log(bodyUpdateLineArray, 'bodyUpdateLineArray');
+      console.log(componentDidMountBodyArray, 'componentDidMountBodyArray');
 
-      const updatedMountBody = [];
       for (let i = 0; i < bodyUpdateLineArray.length; i++) {
-        const currentUpdateLine = bodyUpdateLineArray[i].trim();
-        for (let j = 0; j < componentDidMountBodyArray.length; j++) {
-          const currentMountLine = componentDidMountBodyArray[j].trim();
-          if (currentUpdateLine === currentMountLine) {
-            updatedMountBody.push(currentMountLine);
-          }
+        const currentLine = bodyUpdateLineArray[i];
+        const index = componentDidMountBodyArray.indexOf(currentLine);
+        if (index > -1) {
+          componentDidMountBodyArray = componentDidMountBodyArray.splice(
+            index,
+            1
+          );
         }
       }
-      if (updatedMountBody.length === 0) {
+      // const updatedMountBody = [];
+      // for (let i = 0; i < bodyUpdateLineArray.length; i++) {
+      //   const currentUpdateLine = bodyUpdateLineArray[i].trim();
+
+      //   for (let j = 0; j < componentDidMountBodyArray.length; j++) {
+      //     const currentMountLine = componentDidMountBodyArray[j].trim();
+
+      //     if (currentUpdateLine === currentMountLine) {
+      //       updatedMountBody.push(currentMountLine);
+      //     }
+      //   }
+      // }
+
+      if (componentDidMountBodyArray.length === 0) {
         return -1;
       } else {
         bodyMountLineArray = bodyMountLineArray.map((line) => {
-          if (updatedMountBody.indexOf(line) === -1) {
+          if (componentDidMountBodyArray.indexOf(line) === -1) {
             return line;
           }
         });
@@ -126,13 +141,12 @@ function createUseEffects(objectOfLifeCycle) {
 
   if (objectOfLifeCycleKeys.length === 1) {
     let useEffect = createSingleUseEffect(
-      objectOfLifeCycleKeys[0],
-      objectOfLifeCycle[objectOfLifeCycleKeys[0]]
+      objectOfLifeCycle[objectOfLifeCycleKeys[0]],
+      objectOfLifeCycleKeys[0]
     );
     return useEffect;
   } else {
     const similarities = checkMountAndUpdateForSimilarties(objectOfLifeCycle);
-
     if (similarities === -1) {
       return multiuseEffectCreate(objectOfLifeCycle);
     } else {
