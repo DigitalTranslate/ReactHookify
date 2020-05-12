@@ -1,2 +1,12 @@
 -comments within the class component are removed
 -prettier semicolons
+-is there some way to tell if something is a valid react component? Maybe the component has a WrapperComponent on it? Maybe theres some way to test if that WrapperComponent exists on the file we created
+-using state without constructor
+-getters, setters, static
+
+const x = this.state.name
+const data = axios.get('/api/users.x')
+
+identify state properties
+identify all variables associated with state properties
+Group all lines that have either the property or the associated variables
