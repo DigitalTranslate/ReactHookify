@@ -7,9 +7,9 @@ export default class App extends Component {
       firstName: 'bobdog',
       lastName: 'snob',
       friends: ['joe', 'shmoe'],
-      cats: {},
+      cats: { lstName: 'woof' },
       kangaroo: {
-        2: 'Number!',
+        2: 3,
         name: 'Jacki',
       },
     }
@@ -21,18 +21,66 @@ export default class App extends Component {
 
   otherGenericMethod2() {
     const excitingVariable = 23
-    console.log('hello world')
+    this.setState({
+      firstName: 'catmeow',
+    })
   }
 
   genericMethod() {
     const dullVariable = 24
-    console.log('hi world')
+    this.setState({
+      lastName: 'wowow',
+    })
   }
 
   render() {
     return (
       <div className="simple">
         <div>hi</div>
+        <button
+          type="button"
+          onClick={function () {
+            this.setState({
+              count: this.state.count + 1,
+              name: this.state.name,
+            })
+          }}
+        >
+          Click me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 2,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 1,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 4,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
       </div>
     )
   }

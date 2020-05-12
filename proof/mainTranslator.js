@@ -10,6 +10,7 @@ const {
   getEndIdxOfFunc,
   getInsideOfFunc,
   getClassName,
+  replaceSetState,
 } = require('./utils/commonUtils')
 const {
   findComponents,
@@ -64,7 +65,8 @@ function translateToFunctionComp(classCompInStr) {
       ${returnSlice}
     )
   }`
-  return finalStr.replace(/this.props/gi, 'props').replace(/this.state/gi, '')
+  finalStr = replaceSetState(finalStr)
+  return finalStr.replace(/this.props/gi, 'props').replace(/this.state./gi, '')
 }
 
 //THIS FUNCTION TAKES CREATED STRING AND WRITES A FILE
@@ -81,8 +83,12 @@ function createFunctionComponentFile(funcCompInStr, filepath) {
 async function readAndCreate(filepath) {
   try {
     const content = await fs.promises.readFile(filepath, 'utf-8')
+    // const unformattedContent = await fs.promises.readFile(filepath, 'utf-8')
+
     //DO NOTE USE readFileSync
+    // const content = prettier.format(unformattedContent)
     const funcComponent = translateToFunctionComp(content)
+    // console.log(funcComponent)
     createFunctionComponentFile(funcComponent, filepath)
   } catch (error) {
     console.log('Error reading file')
