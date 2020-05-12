@@ -1,6 +1,6 @@
 const str0 = `import statement
 
-class    testApp extends Component {
+class    testApp extends React.Component {
 
   constructor() {
     super()
@@ -11,13 +11,17 @@ class    testApp extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount(arg1) {
 
   }
 
-  ANOTHERgenericMethod() {
+  // comment 1
+
+  ANOTHERgenericMethod(arg2) {
 
   }
+
+  /* comment 2 */
 
   genericMethod  () {
 
