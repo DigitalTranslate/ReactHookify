@@ -91,20 +91,29 @@ class    testApp extends Component {
   }
 
   componentDidMount() {
+    document.title = You clicked {this.state.count} times;
 
     ChatAPI.subscribeToFriendStatus(
       this.props.friend.id,
       this.handleStatusChange
     );
-    document.title = You clicked {this.state.count} times;
-
-    
   }
 
   componentDidUpdate() {
-
-    document.title = You clicked {this.state.count} times;
+    if(this.state.count = 10){
+      count = 10
+      document.title = You clicked {this.state.count} times;
+    }
   }
+
+  componentWillUnmount() {
+    ChatAPI.subscribeToFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
+  }
+
+  
 
   
 

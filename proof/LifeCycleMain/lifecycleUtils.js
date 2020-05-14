@@ -1,4 +1,3 @@
-const { str0, str1, str2, str3, str4, str5 } = require('../utils/exampleClass');
 const { getInsideOfFunc, validBraces } = require('./commonLifeCycleUtils');
 const { createCompDidMountLifeCycle } = require('./componentDidMountParse');
 const { createCompDidUpdateLifeCycle } = require('./componentDidUpdateParse');
@@ -35,6 +34,33 @@ function findComponents(string) {
     }
   }
   return returnedComponents;
+}
+
+//Creates routes for creating useEffects, Checks for type of Lifecycle Method
+//Takes in object of lifecycle hooks, routes to different useEffect creatations
+function createUseEffects(objectOfLifeCycle) {
+  console.log(objectOfLifeCycle, 'objectOfLifeCycle');
+  const objectOfLifeCycleKeys = Object.keys(objectOfLifeCycle);
+
+  if (objectOfLifeCycleKeys.length === 1) {
+    let useEffect = createSingleUseEffect(
+      objectOfLifeCycle[objectOfLifeCycleKeys[0]],
+      objectOfLifeCycleKeys[0]
+    );
+    return useEffect;
+  } else {
+    // Check For WillUnmount
+    // Search For similarities
+
+    //Else If Not WillUnmount
+    const similarities = checkMountAndUpdateForSimilarties(objectOfLifeCycle);
+
+    if (similarities === -1) {
+      return multiuseEffectCreate(objectOfLifeCycle);
+    } else {
+      return multiuseEffectCreate(similarities);
+    }
+  }
 }
 
 //Creates useEffect from body of lifecycle method that is passed in
@@ -85,9 +111,10 @@ function checkMountAndUpdateForSimilarties(object) {
         objectOfLifeCycleKeys[1]
       );
 
-      const bodyUpdateLineArray = componentDidUpdatebodyString.split(/\r?\n/);
-      console.log(bodyUpdateLineArray, 'bodyUpdateLineArray');
-      console.log(componentDidMountBodyArray, 'componentDidMountBodyArray');
+      let bodyUpdateLineArray = componentDidUpdatebodyString.split(/\r?\n/);
+      bodyUpdateLineArray = bodyUpdateLineArray.map((line) => {
+        return line.trim();
+      });
 
       for (let i = 0; i < bodyUpdateLineArray.length; i++) {
         const currentLine = bodyUpdateLineArray[i];
@@ -99,25 +126,15 @@ function checkMountAndUpdateForSimilarties(object) {
           );
         }
       }
-      // const updatedMountBody = [];
-      // for (let i = 0; i < bodyUpdateLineArray.length; i++) {
-      //   const currentUpdateLine = bodyUpdateLineArray[i].trim();
-
-      //   for (let j = 0; j < componentDidMountBodyArray.length; j++) {
-      //     const currentMountLine = componentDidMountBodyArray[j].trim();
-
-      //     if (currentUpdateLine === currentMountLine) {
-      //       updatedMountBody.push(currentMountLine);
-      //     }
-      //   }
-      // }
 
       if (componentDidMountBodyArray.length === 0) {
         return -1;
       } else {
         bodyMountLineArray = bodyMountLineArray.map((line) => {
-          if (componentDidMountBodyArray.indexOf(line) === -1) {
+          if (bodyUpdateLineArray.indexOf(line.trim()) === -1) {
             return line;
+          } else {
+            return '';
           }
         });
 
@@ -131,26 +148,6 @@ function checkMountAndUpdateForSimilarties(object) {
         }
         return object;
       }
-    }
-  }
-}
-
-//Creates routes for creating useEffects
-function createUseEffects(objectOfLifeCycle) {
-  const objectOfLifeCycleKeys = Object.keys(objectOfLifeCycle);
-
-  if (objectOfLifeCycleKeys.length === 1) {
-    let useEffect = createSingleUseEffect(
-      objectOfLifeCycle[objectOfLifeCycleKeys[0]],
-      objectOfLifeCycleKeys[0]
-    );
-    return useEffect;
-  } else {
-    const similarities = checkMountAndUpdateForSimilarties(objectOfLifeCycle);
-    if (similarities === -1) {
-      return multiuseEffectCreate(objectOfLifeCycle);
-    } else {
-      return multiuseEffectCreate(similarities);
     }
   }
 }
