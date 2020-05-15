@@ -3,6 +3,8 @@ const { createCompDidMountLifeCycle } = require('./componentDidMountParse');
 const { createCompDidUpdateLifeCycle } = require('./componentDidUpdateParse');
 const {
   createCompWillUnmountLifeCycle,
+  checkUnmountForSimilarties,
+  createCompWillUnmountCleanUp,
 } = require('./componentWillUnmountParse');
 
 //Loops through string and finds components-lifecycle-methods,
@@ -39,7 +41,6 @@ function findComponents(string) {
 //Creates routes for creating useEffects, Checks for type of Lifecycle Method
 //Takes in object of lifecycle hooks, routes to different useEffect creatations
 function createUseEffects(objectOfLifeCycle) {
-  console.log(objectOfLifeCycle, 'objectOfLifeCycle');
   const objectOfLifeCycleKeys = Object.keys(objectOfLifeCycle);
 
   if (objectOfLifeCycleKeys.length === 1) {
@@ -49,39 +50,66 @@ function createUseEffects(objectOfLifeCycle) {
     );
     return useEffect;
   } else {
-    // Check For WillUnmount
-    // Search For similarities
-
-    //Else If Not WillUnmount
+    // Mount and Update
     const similarities = checkMountAndUpdateForSimilarties(objectOfLifeCycle);
 
+    let similiarUnmount;
+    // Search lifecycles for similiar Unmount function
+    if (objectOfLifeCycleKeys.includes('componentWillUnmount()')) {
+      const check = checkUnmountForSimilarties(objectOfLifeCycle);
+      if (check !== -1) {
+        similiarUnmount = check;
+      }
+    }
+
     if (similarities === -1) {
-      return multiuseEffectCreate(objectOfLifeCycle);
+      return multiuseEffectCreate(objectOfLifeCycle, similiarUnmount);
     } else {
-      return multiuseEffectCreate(similarities);
+      return multiuseEffectCreate(similarities, similiarUnmount);
     }
   }
 }
 
 //Creates useEffect from body of lifecycle method that is passed in
-function createSingleUseEffect(string, method) {
+function createSingleUseEffect(string, method, cleanup) {
   if (method === 'componentDidMount()') {
-    return createCompDidMountLifeCycle(string, method);
+    return createCompDidMountLifeCycle(string, method, cleanup);
   } else if (method === 'componentDidUpdate()') {
-    return createCompDidUpdateLifeCycle(string, method);
+    return createCompDidUpdateLifeCycle(string, method, cleanup);
   } else if (method === 'componentWillUnmount()') {
     return createCompWillUnmountLifeCycle(string, method);
   }
 }
 
 // Loops through object containing Lifecycle methods and creates useEffect
-function multiuseEffectCreate(object) {
+function multiuseEffectCreate(object, cleanup) {
   let results = [];
-  for (let i in object) {
+  let lifecycleObject = object;
+  if (cleanup) {
+    const cleanUpString = createCompWillUnmountCleanUp(
+      lifecycleObject['componentWillUnmount()']
+    );
+
+    const cleanupUseEffect = createSingleUseEffect(
+      lifecycleObject[cleanup],
+      cleanup,
+      cleanUpString
+    );
+    let obj = {};
+    obj[cleanup] = cleanupUseEffect;
+    results.push(obj);
+    delete lifecycleObject[cleanup];
+  }
+
+  for (let i in lifecycleObject) {
     const key = i;
-    const value = object[i];
-    const useEffect = createSingleUseEffect(value, key);
-    results.push(useEffect);
+    const value = lifecycleObject[i];
+
+    let useEffect = createSingleUseEffect(value, key);
+
+    let obj = {};
+    obj[key] = useEffect;
+    results.push(obj);
   }
   return results;
 }

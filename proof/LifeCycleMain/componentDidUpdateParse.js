@@ -1,19 +1,24 @@
 const { getInsideOfFunc, validBraces } = require('./commonLifeCycleUtils');
 
 // Creates Component Did Update
-function createCompDidUpdateLifeCycle(string, method) {
+function createCompDidUpdateLifeCycle(string, method, cleanup) {
+  console.log(cleanup);
   let updateVariable = findPrevStateForUpdate(string);
   if (updateVariable === -1) {
     updateVariable = findThisStateForUpdate(string);
   }
   if (updateVariable === -1) {
     let useEffectDidUpdateTemplate = `useEffect(() => {
-        ${getInsideOfFunc(string, method)}})`;
+        ${getInsideOfFunc(string, method)}
+        ${cleanup ? cleanup : ''}
+      })`;
     return useEffectDidUpdateTemplate;
   }
 
   let useEffectDidUpdateTemplate = `useEffect(() => {
-      ${getInsideOfFunc(string, method)}}, [${updateVariable}])`;
+      ${getInsideOfFunc(string, method)}
+      ${cleanup ? cleanup : ''}
+    }, [${updateVariable}])`;
 
   return useEffectDidUpdateTemplate;
 }
