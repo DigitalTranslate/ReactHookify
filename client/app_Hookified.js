@@ -10,7 +10,6 @@ export default function App() {
     name: "Jacki",
   })
 
-  useEffect(() => {}, [])
   useEffect(() => {
     document.title = firstName
   }, [])
