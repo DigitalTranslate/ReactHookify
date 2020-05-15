@@ -15,7 +15,7 @@ export default class App extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     document.title = this.state.firstName
   }
 
