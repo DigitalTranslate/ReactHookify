@@ -15,8 +15,8 @@ export default class App extends Component {
     }
   }
 
-  async componentDidMount() {
-    document.title = await this.state.firstName
+  componentDidMount() {
+    document.title = this.state.firstName
   }
 
   otherGenericMethod2() {
