@@ -16,7 +16,14 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    document.title = this.state.firstName
+    document.title = await this.state.firstName
+    console.log('hi')
+  }
+
+  handleChangeIndex(carouselIndex) {
+    this.setState({
+      carouselIndex,
+    })
   }
 
   otherGenericMethod2() {
