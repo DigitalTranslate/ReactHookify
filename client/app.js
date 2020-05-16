@@ -20,14 +20,14 @@ export default class App extends Component {
     console.log('hi')
   }
 
-  otherGenericMethod2() {
+  otherGenericMethod2 = async () => {
     const excitingVariable = 23
-    this.setState({
+    await this.setState({
       firstName: 'catmeow',
     })
   }
 
-  genericMethod() {
+  genericMethod = () => {
     const dullVariable = 24
     this.setState({
       lastName: 'wowow',
