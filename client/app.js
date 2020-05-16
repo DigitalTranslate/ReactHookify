@@ -16,7 +16,8 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    document.title = this.state.firstName
+    document.title = await this.state.firstName
+    console.log('hi')
   }
 
   otherGenericMethod2() {
@@ -39,8 +40,8 @@ export default class App extends Component {
         <div>hi</div>
         <button
           type="button"
-          onClick={function () {
-            this.setState({
+          onClick={async function () {
+            await this.setState({
               count: this.state.count + 1,
               name: this.state.name,
             })
