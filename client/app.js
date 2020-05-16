@@ -20,12 +20,6 @@ export default class App extends Component {
     console.log('hi')
   }
 
-  handleChangeIndex(carouselIndex) {
-    this.setState({
-      carouselIndex,
-    })
-  }
-
   otherGenericMethod2() {
     const excitingVariable = 23
     this.setState({
@@ -46,8 +40,8 @@ export default class App extends Component {
         <div>hi</div>
         <button
           type="button"
-          onClick={function () {
-            this.setState({
+          onClick={async function () {
+            await this.setState({
               count: this.state.count + 1,
               name: this.state.name,
             })
