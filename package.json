@@ -2,9 +2,9 @@
   "name": "reacthookify",
   "version": "1.0.0",
   "description": "",
-  "main": "proof/mainTranslator.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "hookify client/app.js",
     "start": "webpack-dev-server",
     "build-client-watch": "webpack -w",
     "start-dev": "npm run build-client-watch"

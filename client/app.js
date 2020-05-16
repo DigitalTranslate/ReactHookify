@@ -15,14 +15,15 @@ export default class App extends Component {
     }
   }
 
-  async componentDidMount() {
-    document.title = await this.state.firstName
-    console.log('hi')
+  componentDidMount() {
+    this.setState({
+      cat: { lstName: 'catmeow' },
+    })
   }
 
   otherGenericMethod2 = async () => {
     const excitingVariable = 23
-    await this.setState({
+    this.setState({
       firstName: 'catmeow',
     })
   }
