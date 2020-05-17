@@ -15,19 +15,14 @@ export default class App extends Component {
     }
   }
 
-  async componentDidMount() {
-    document.title = await this.state.firstName
-    console.log('hi')
-  }
-
-  otherGenericMethod2() {
+  otherGenericMethod2 = async () => {
     const excitingVariable = 23
     this.setState({
       firstName: 'catmeow',
     })
   }
 
-  genericMethod() {
+  genericMethod = () => {
     const dullVariable = 24
     this.setState({
       lastName: 'wowow',
@@ -35,6 +30,7 @@ export default class App extends Component {
   }
 
   render() {
+    const x = this.state.firstName
     return (
       <div className="simple">
         <div>hi</div>
