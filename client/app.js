@@ -15,12 +15,6 @@ export default class App extends Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({
-      cat: { lstName: 'catmeow' },
-    })
-  }
-
   otherGenericMethod2 = async () => {
     const excitingVariable = 23
     this.setState({
