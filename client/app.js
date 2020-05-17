@@ -30,6 +30,7 @@ export default class App extends Component {
   }
 
   render() {
+    const x = this.state.firstName
     return (
       <div className="simple">
         <div>hi</div>
