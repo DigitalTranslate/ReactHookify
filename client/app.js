@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unused-state */
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 export default class App extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       firstName: 'bobdog',
       lastName: 'snob',
@@ -12,38 +12,52 @@ export default class App extends Component {
         2: 3,
         name: 'Jacki',
       },
+    };
+  }
+
+  componentDidMount() {
+    console.log('start');
+    console.log('update');
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('update');
+
+    if (prevProps.firstName !== this.state.firstName) {
+      console.log('Conditional');
     }
   }
 
-  async componentDidMount() {
-    document.title = this.state.firstName
+  componentWillUnmount() {
+    console.log('end');
   }
 
-  otherGenericMethod2() {
-    const excitingVariable = 23
+  otherGenericMethod2 = async () => {
+    const excitingVariable = 23;
     this.setState({
       firstName: 'catmeow',
-    })
-  }
+    });
+  };
 
-  genericMethod() {
-    const dullVariable = 24
+  genericMethod = () => {
+    const dullVariable = 24;
     this.setState({
       lastName: 'wowow',
-    })
-  }
+    });
+  };
 
   render() {
+    const x = this.state.firstName;
     return (
       <div className="simple">
         <div>hi</div>
         <button
           type="button"
-          onClick={function () {
-            this.setState({
+          onClick={async function () {
+            await this.setState({
               count: this.state.count + 1,
               name: this.state.name,
-            })
+            });
           }}
         >
           Click me
@@ -82,6 +96,6 @@ export default class App extends Component {
           Click Me
         </button>
       </div>
-    )
+    );
   }
 }
