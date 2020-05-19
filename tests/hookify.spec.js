@@ -3,7 +3,31 @@ const hookify = require('./hookify')
 const specs = require('./testComponents')
 
 describe('hookify', () => {
-  it('can fail', () => {
+  it('handles class with just render', () => {
     expect(hookify(specs.test1)).to.equal(specs.answer1)
   })
+  it('handles basic this.state', () => {
+    expect(hookify(specs.test2)).to.equal(specs.answer2)
+  })
+  it('handles basic generic method', () => {
+    expect(hookify(specs.test3)).to.equal(specs.answer3)
+  })
+  it('handles imports', () => {
+    expect(hookify(specs.test4)).to.equal(specs.answer4)
+  })
+  it('handles complex this.state', () => {
+    expect(hookify(specs.test5)).to.equal(specs.answer5)
+  })
+  it('handles arrow methods', () => {
+    expect(hookify(specs.test6)).to.equal(specs.answer6)
+  })
+  it('handles basic componentDidMount', () => {
+    expect(hookify(specs.test7)).to.equal(specs.answer7)
+  })
+  it('handles big complex render', () => {
+    expect(hookify(specs.test8)).to.equal(specs.answer8)
+  })
+  // it('handles basic generic method', () => {
+  //   expect(hookify(specs.test3)).to.equal(specs.answer3)
+  // })
 })
