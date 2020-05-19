@@ -3,10 +3,27 @@ import React, { Component } from 'react'
 export default class App extends Component {
   constructor() {
     super()
-    this.state = {}
+    this.state = {
+      firstName: 'bobdog',
+      lastName: 'snob',
+      friends: ['joe', 'shmoe'],
+      cats: { lstName: 'woof' },
+      kangaroo: {
+        2: 3,
+        name: 'Jacki',
+      },
+    }
   }
+
   componentDidMount() {
-    this.props.loadData()
+    const test = 'hello'
+    console.log(test)
+    // const x = 5
+    console.log('bye')
+    let x = 5
+    let bob = x
+    // let num = 5
+    // let newNumber = num * 5
   }
   // componentDidUpdate() {
   //   if (prevProps.counter !== this.props.counter) {
@@ -15,6 +32,15 @@ export default class App extends Component {
   // }
   // componentWillUnmount() {
   //   window.removeEventListener('resize', this.updateDimensions)
+  // }
+
+  // componentDidUpdate() {
+  //   if (prevProps.counter !== this.props.counter) {
+  //     console.log(this.props.counter)
+  //   }
+  // }
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize', this.updateDimensions);
   // }
 
   otherGenericMethod2 = async () => {
