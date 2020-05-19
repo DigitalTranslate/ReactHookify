@@ -15,11 +15,22 @@ export default class App extends Component {
     }
   }
 
-  componentDidUpdate() {
-    if (prevProps.counter !== this.props.counter) {
-      console.log(this.props.counter)
-    }
+  componentDidMount() {
+    const test = 'hello'
+    console.log(test)
+    // const x = 5
+    console.log('bye')
+    let x = 5
+    let bob = x
+    // let num = 5
+    // let newNumber = num * 5
   }
+
+  // componentDidUpdate() {
+  //   if (prevProps.counter !== this.props.counter) {
+  //     console.log(this.props.counter)
+  //   }
+  // }
   // componentWillUnmount() {
   //   window.removeEventListener('resize', this.updateDimensions);
   // }
