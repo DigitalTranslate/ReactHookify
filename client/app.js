@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unused-state */
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 export default class App extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       firstName: 'bobdog',
       lastName: 'snob',
@@ -12,16 +12,16 @@ export default class App extends Component {
         2: 3,
         name: 'Jacki',
       },
-    }
+    };
   }
 
   componentDidMount() {
-    const test = 'hello'
-    console.log(test)
+    const test = 'hello';
+    console.log(test);
     // const x = 5
-    console.log('bye')
-    let x = 5
-    let bob = x
+    console.log('bye');
+    let x = 5;
+    let bob = x;
     // let num = 5
     // let newNumber = num * 5
   }
@@ -44,21 +44,21 @@ export default class App extends Component {
   // }
 
   otherGenericMethod2 = async () => {
-    const excitingVariable = 23
+    const excitingVariable = 23;
     this.setState({
       firstName: 'catmeow',
-    })
-  }
+    });
+  };
 
   genericMethod = () => {
-    const dullVariable = 24
+    const dullVariable = 24;
     this.setState({
       lastName: 'wowow',
-    })
-  }
+    });
+  };
 
   render() {
-    const x = this.state.firstName
+    const x = this.state.firstName;
     return (
       <div className="simple">
         <div>hi</div>
@@ -68,7 +68,7 @@ export default class App extends Component {
             await this.setState({
               count: this.state.count + 1,
               name: this.state.name,
-            })
+            });
           }}
         >
           Click me
@@ -107,6 +107,8 @@ export default class App extends Component {
           Click Me
         </button>
       </div>
-    )
+    );
   }
 }
+
+export default ArticleList;

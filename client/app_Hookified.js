@@ -1,75 +1,34 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react';
 export default function App() {
-  const [firstName, setFirstName] = useState("bobdog")
-  const [lastName, setLastName] = useState("snob")
-  const [friends, setFriends] = useState(["joe", "shmoe"])
-  const [cats, setCats] = useState({ lstName: "woof" })
+  const [firstName, setFirstName] = useState('bobdog');
+  const [lastName, setLastName] = useState('snob');
+  const [friends, setFriends] = useState(['joe', 'shmoe']);
+  const [cats, setCats] = useState({ lstName: 'woof' });
   const [kangaroo, setKangaroo] = useState({
     2: 3,
-    name: "Jacki",
-  })
+    name: 'Jacki',
+  });
 
   useEffect(() => {
-    const test = "hello"
-    console.log(test)
-  }, [])
+    const test = 'hello';
+    console.log(test);
+  }, []);
   useEffect(() => {
-    let x = 5
-    let bob = x
-  }, [])
+    let x = 5;
+    let bob = x;
+  }, []);
   useEffect(() => {
-    console.log("bye")
-  }, [])
+    console.log('bye');
+  }, []);
 
-  function otherGenericMethod2() {
-    const excitingVariable = 23
-    setFirstName("catmeow")
-  }
-  function genericMethod() {
-    const dullVariable = 24
-    setLastName("wowow")
-  }
-
-  const x = firstName
   return (
-    <div className="simple">
-      <div>hi</div>
-      <button
-        type="button"
-        onClick={async function () {
-          await setCount(count + 1)
-          await setName(name)
-        }}
-      >
-        Click me
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setCount(count + 2)
-          setName(name)
-        }}
-      >
-        Click Me
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setCount(count + 3)
-          setName(name)
-        }}
-      >
-        Click Me
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setCount(count + 4)
-          setName(name)
-        }}
-      >
-        Click Me
-      </button>
+    <div>
+      <h1>Today's Articles:</h1>
+      {articles.map((article) => (
+        <Article key={article.id} fullArticle={article} />
+      ))}
     </div>
-  )
+  );
 }
+
+export default ArticleList;
