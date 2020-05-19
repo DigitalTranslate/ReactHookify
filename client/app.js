@@ -25,6 +25,14 @@ export default class App extends Component {
     // let num = 5
     // let newNumber = num * 5
   }
+  // componentDidUpdate() {
+  //   if (prevProps.counter !== this.props.counter) {
+  //     console.log(this.props.counter)
+  //   }
+  // }
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize', this.updateDimensions)
+  // }
 
   // componentDidUpdate() {
   //   if (prevProps.counter !== this.props.counter) {
