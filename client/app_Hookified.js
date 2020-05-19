@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-export default function App(props) {
+export default function App() {
   const [firstName, setFirstName] = useState("bobdog")
   const [lastName, setLastName] = useState("snob")
   const [friends, setFriends] = useState(["joe", "shmoe"])
@@ -10,8 +10,16 @@ export default function App(props) {
   })
 
   useEffect(() => {
-    console.log(props.counter)
-  }, [props.counter])
+    const test = "hello"
+    console.log(test)
+  }, [])
+  useEffect(() => {
+    let x = 5
+    let bob = x
+  }, [])
+  useEffect(() => {
+    console.log("bye")
+  }, [])
 
   function otherGenericMethod2() {
     const excitingVariable = 23
