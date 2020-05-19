@@ -1,26 +1,103 @@
-import React from 'react';
-import Article from './Article';
-
-class ArticleList extends React.Component {
+/* eslint-disable react/no-unused-state */
+import React, { Component } from 'react';
+export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      articles: [],
+      firstName: 'bobdog',
+      lastName: 'snob',
+      friends: ['joe', 'shmoe'],
+      cats: { lstName: 'woof' },
+      kangaroo: {
+        2: 3,
+        name: 'Jacki',
+      },
     };
   }
 
   componentDidMount() {
-    const userID = this.props.match.params.userID;
-    this.props.getCartItems(userID);
+    const test = 'hello';
+    console.log(test);
+    // const x = 5
+    console.log('bye');
+    let x = 5;
+    let bob = x;
+    // let num = 5
+    // let newNumber = num * 5
   }
 
+  // componentDidUpdate() {
+  //   if (prevProps.counter !== this.props.counter) {
+  //     console.log(this.props.counter)
+  //   }
+  // }
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize', this.updateDimensions);
+  // }
+
+  otherGenericMethod2 = async () => {
+    const excitingVariable = 23;
+    this.setState({
+      firstName: 'catmeow',
+    });
+  };
+
+  genericMethod = () => {
+    const dullVariable = 24;
+    this.setState({
+      lastName: 'wowow',
+    });
+  };
+
   render() {
+    const x = this.state.firstName;
     return (
-      <div>
-        <h1>Today's Articles:</h1>
-        {this.state.articles.map((article) => (
-          <Article key={article.id} fullArticle={article} />
-        ))}
+      <div className="simple">
+        <div>hi</div>
+        <button
+          type="button"
+          onClick={async function () {
+            await this.setState({
+              count: this.state.count + 1,
+              name: this.state.name,
+            });
+          }}
+        >
+          Click me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 2,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 3,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 4,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
       </div>
     );
   }

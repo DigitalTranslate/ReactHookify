@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from "react"
-import Article from "./Article"
+import React, { useState, useEffect } from 'react';
+export default function App() {
+  const [firstName, setFirstName] = useState('bobdog');
+  const [lastName, setLastName] = useState('snob');
+  const [friends, setFriends] = useState(['joe', 'shmoe']);
+  const [cats, setCats] = useState({ lstName: 'woof' });
+  const [kangaroo, setKangaroo] = useState({
+    2: 3,
+    name: 'Jacki',
+  });
 
-function ArticleList() {
-  const [articles, setArticles] = useState([])
-
   useEffect(() => {
-    ;(async () => {
-      const test = await axios.get("/route/test")
-    })()
-  }, [])
+    const test = 'hello';
+    console.log(test);
+  }, []);
   useEffect(() => {
-    const something = "hello"
-  }, [])
+    let x = 5;
+    let bob = x;
+  }, []);
   useEffect(() => {
-    console.log("hi")
-  }, [])
+    console.log('bye');
+  }, []);
 
   return (
     <div>
@@ -23,7 +28,7 @@ function ArticleList() {
         <Article key={article.id} fullArticle={article} />
       ))}
     </div>
-  )
+  );
 }
 
-export default ArticleList
+export default ArticleList;
