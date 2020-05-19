@@ -183,6 +183,135 @@ function App() {
   return <div></div>
 }
 `
+const test7 = `class App extends Component {
+  componentDidMount() {
+    this.props.loadData()
+  }
+  render() {
+    return <div></div>
+  }
+}
+`
+const answer7 = `import React, { useEffect } from "react"
+function App(props) {
+  useEffect(() => {
+    props.loadData()
+  }, [])
+
+  return <div></div>
+}
+`
+
+const test8 = `class App extends Component {
+  render() {
+    const x = this.state.firstName
+    return (
+      <div className="simple">
+        <div>hi</div>
+        <button
+          type="button"
+          onClick={async function () {
+            await this.setState({
+              count: this.state.count + 1,
+              name: this.state.name,
+            })
+          }}
+        >
+          Click me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 2,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 3,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 4,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+      </div>
+    )
+  }
+}
+`
+const answer8 = `class App extends Component {
+  render() {
+    const x = this.state.firstName
+    return (
+      <div className="simple">
+        <div>hi</div>
+        <button
+          type="button"
+          onClick={async function () {
+            await this.setState({
+              count: this.state.count + 1,
+              name: this.state.name,
+            })
+          }}
+        >
+          Click me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 2,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 3,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            this.setState({
+              count: this.state.count + 4,
+              name: this.state.name,
+            })
+          }
+        >
+          Click Me
+        </button>
+      </div>
+    )
+  }
+}
+`
 
 const test = ``
 const answer = ``
@@ -200,4 +329,8 @@ module.exports = {
   answer5,
   test6,
   answer6,
+  test7,
+  answer7,
+  test8,
+  answer8,
 }

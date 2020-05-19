@@ -5,6 +5,17 @@ export default class App extends Component {
     super()
     this.state = {}
   }
+  componentDidMount() {
+    this.props.loadData()
+  }
+  // componentDidUpdate() {
+  //   if (prevProps.counter !== this.props.counter) {
+  //     console.log(this.props.counter)
+  //   }
+  // }
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize', this.updateDimensions)
+  // }
 
   otherGenericMethod2 = async () => {
     const excitingVariable = 23

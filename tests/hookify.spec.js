@@ -21,21 +21,12 @@ describe('hookify', () => {
   it('handles arrow methods', () => {
     expect(hookify(specs.test6)).to.equal(specs.answer6)
   })
-  // it('handles basic generic method', () => {
-  //   expect(hookify(specs.test3)).to.equal(specs.answer3)
-  // })
-  // it('handles basic generic method', () => {
-  //   expect(hookify(specs.test3)).to.equal(specs.answer3)
-  // })
-  // it('handles basic generic method', () => {
-  //   expect(hookify(specs.test3)).to.equal(specs.answer3)
-  // })
-  // it('handles basic generic method', () => {
-  //   expect(hookify(specs.test3)).to.equal(specs.answer3)
-  // })
-  // it('handles basic generic method', () => {
-  //   expect(hookify(specs.test3)).to.equal(specs.answer3)
-  // })
+  it('handles basic componentDidMount', () => {
+    expect(hookify(specs.test7)).to.equal(specs.answer7)
+  })
+  it('handles big complex render', () => {
+    expect(hookify(specs.test8)).to.equal(specs.answer8)
+  })
   // it('handles basic generic method', () => {
   //   expect(hookify(specs.test3)).to.equal(specs.answer3)
   // })
