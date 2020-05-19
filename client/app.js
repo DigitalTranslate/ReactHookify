@@ -15,21 +15,13 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log('start');
-    console.log('update');
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('update');
-
-    if (prevProps.firstName !== this.state.firstName) {
-      console.log('Conditional');
+  componentDidUpdate() {
+    if (prevProps.counter !== this.props.counter) {
+      console.log(this.props.counter);
     }
   }
-
   componentWillUnmount() {
-    console.log('end');
+    window.removeEventListener('resize', this.updateDimensions);
   }
 
   otherGenericMethod2 = async () => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-export default function App() {
+export default function App(props) {
   const [firstName, setFirstName] = useState("bobdog")
   const [lastName, setLastName] = useState("snob")
   const [friends, setFriends] = useState(["joe", "shmoe"])
@@ -10,17 +10,11 @@ export default function App() {
   })
 
   useEffect(() => {
-    console.log("start")
-  }, [])
-  useEffect(() => {
-    console.log("Conditional")
-  }, [firstName])
-  useEffect(() => {
-    console.log("update")
-  })
+    console.log(props.counter)
+  }, [props.counter])
   useEffect(() => {
     return () => {
-      console.log("end")
+      window.removeEventListener("resize", updateDimensions)
     }
   }, [])
 
