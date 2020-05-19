@@ -257,59 +257,50 @@ const test8 = `class App extends Component {
   }
 }
 `
-const answer8 = `class App extends Component {
-  render() {
-    const x = this.state.firstName
-    return (
-      <div className="simple">
-        <div>hi</div>
-        <button
-          type="button"
-          onClick={async function () {
-            await this.setState({
-              count: this.state.count + 1,
-              name: this.state.name,
-            })
-          }}
-        >
-          Click me
-        </button>
-        <button
-          type="button"
-          onClick={() =>
-            this.setState({
-              count: this.state.count + 2,
-              name: this.state.name,
-            })
-          }
-        >
-          Click Me
-        </button>
-        <button
-          type="button"
-          onClick={() =>
-            this.setState({
-              count: this.state.count + 3,
-              name: this.state.name,
-            })
-          }
-        >
-          Click Me
-        </button>
-        <button
-          type="button"
-          onClick={() =>
-            this.setState({
-              count: this.state.count + 4,
-              name: this.state.name,
-            })
-          }
-        >
-          Click Me
-        </button>
-      </div>
-    )
-  }
+const answer8 = `import React from "react"
+function App() {
+  const x = firstName
+  return (
+    <div className="simple">
+      <div>hi</div>
+      <button
+        type="button"
+        onClick={async function () {
+          await setCount(count + 1)
+          await setName(name)
+        }}
+      >
+        Click me
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setCount(count + 2)
+          setName(name)
+        }}
+      >
+        Click Me
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setCount(count + 3)
+          setName(name)
+        }}
+      >
+        Click Me
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setCount(count + 4)
+          setName(name)
+        }}
+      >
+        Click Me
+      </button>
+    </div>
+  )
 }
 `
 
