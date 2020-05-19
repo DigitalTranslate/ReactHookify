@@ -15,8 +15,7 @@
   - `hookify client/app.js`
   - `hookify app.js`
   - `hookify app1.js app2.js`
-
--Look for your new 'hookified' file in the same directory as your class component file!
+- Look for your new 'hookified' file in the same directory as your class component file!
 
 ## Limitations
 
