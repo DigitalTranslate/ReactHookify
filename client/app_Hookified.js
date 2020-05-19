@@ -12,11 +12,6 @@ export default function App(props) {
   useEffect(() => {
     console.log(props.counter)
   }, [props.counter])
-  useEffect(() => {
-    return () => {
-      window.removeEventListener("resize", updateDimensions)
-    }
-  }, [])
 
   function otherGenericMethod2() {
     const excitingVariable = 23

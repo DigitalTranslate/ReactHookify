@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unused-state */
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 export default class App extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       firstName: 'bobdog',
       lastName: 'snob',
@@ -12,34 +12,34 @@ export default class App extends Component {
         2: 3,
         name: 'Jacki',
       },
-    };
+    }
   }
 
   componentDidUpdate() {
     if (prevProps.counter !== this.props.counter) {
-      console.log(this.props.counter);
+      console.log(this.props.counter)
     }
   }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize', this.updateDimensions);
+  // }
 
   otherGenericMethod2 = async () => {
-    const excitingVariable = 23;
+    const excitingVariable = 23
     this.setState({
       firstName: 'catmeow',
-    });
-  };
+    })
+  }
 
   genericMethod = () => {
-    const dullVariable = 24;
+    const dullVariable = 24
     this.setState({
       lastName: 'wowow',
-    });
-  };
+    })
+  }
 
   render() {
-    const x = this.state.firstName;
+    const x = this.state.firstName
     return (
       <div className="simple">
         <div>hi</div>
@@ -49,7 +49,7 @@ export default class App extends Component {
             await this.setState({
               count: this.state.count + 1,
               name: this.state.name,
-            });
+            })
           }}
         >
           Click me
@@ -88,6 +88,6 @@ export default class App extends Component {
           Click Me
         </button>
       </div>
-    );
+    )
   }
 }
