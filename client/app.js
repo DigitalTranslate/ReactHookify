@@ -3,16 +3,7 @@ import React, { Component } from 'react'
 export default class App extends Component {
   constructor() {
     super()
-    this.state = {
-      firstName: 'bobdog',
-      lastName: 'snob',
-      friends: ['joe', 'shmoe'],
-      cats: { lstName: 'woof' },
-      kangaroo: {
-        2: 3,
-        name: 'Jacki',
-      },
-    }
+    this.state = {}
   }
 
   otherGenericMethod2 = async () => {
