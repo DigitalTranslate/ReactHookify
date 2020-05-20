@@ -3,7 +3,7 @@
 ## Overview
 
 - React Hookify is a command line tool that converts React class components into functional components with Hooks! **It will not alter your current file; instead, a new 'hookified' file is created next to your original.**
-- Documentation: https://react-hookify.herokuapp.com/
+- Documentation (with testing playground): https://react-hookify.herokuapp.com/
 
 ## Setup
 
