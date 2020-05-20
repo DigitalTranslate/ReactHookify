@@ -14,17 +14,23 @@ export default class App extends Component {
       },
     };
   }
+  componentDidMount() {
+    genericMethod();
+  }
 
   componentDidUpdate() {
     if (prevProps.counter !== this.props.counter) {
       console.log(this.props.counter);
+
+      genericMethod();
     }
   }
   componentWillUnmount() {
+    otherGenericMethod2();
     window.removeEventListener('resize', this.updateDimensions);
   }
 
-  otherGenericMethod2 = async () => {
+  otherGenericMethod2 = () => {
     const excitingVariable = 23;
     this.setState({
       firstName: 'catmeow',

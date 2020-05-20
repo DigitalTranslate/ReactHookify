@@ -11,9 +11,12 @@ export default function App(props) {
 
   useEffect(() => {
     console.log(props.counter)
+
+    genericMethod()
   }, [props.counter])
   useEffect(() => {
     return () => {
+      otherGenericMethod2()
       window.removeEventListener("resize", updateDimensions)
     }
   }, [])
