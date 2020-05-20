@@ -3,6 +3,7 @@
 ## Overview
 
 - React Hookify is a command line tool that converts React class components into functional components with Hooks! **It will not alter your current file; instead, a new 'hookified' file is created next to your original.**
+- Documentation: https://react-hookify.herokuapp.com/
 
 ## Setup
 
@@ -20,5 +21,6 @@
 ## Limitations
 
 - React Hooks cannot always map 1 to 1 with lifecycle components. Less complex lifecycle components should work fine with React Hookify. In more complex cases, code my have to be rewritten
+  - Currently, the only supported lifecycle methods are componentDidMount, componentDidUpdate, and componentWillUnmount
 - Any comments in the original file will be removed in the 'hookified file'
 - React Hookify does not currently support 'get', 'set', and 'static' keywords
