@@ -1,44 +1,12 @@
-/* eslint-disable react/react-in-jsx-scope */
-class Reservation extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isGoing: true,
-      numberOfGuests: 2,
-    }
+import React, { Component } from 'react'
 
-    this.handleInputChange = this.handleInputChange.bind(this)
-  }
-
-  handleInputChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    })
-  }
-
+export default class app extends Component {
   render() {
-    return (
-      <form>
-        <label>
-          Is going:
-          <input
-            name="isGoing"
-            type="checkbox"
-            checked={this.state.isGoing}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Number of guests:
-          <input
-            name="numberOfGuests"
-            type="number"
-            value={this.state.numberOfGuests}
-            onChange={this.handleInputChange}
-          />
-        </label>
-      </form>
-    )
+    const x = 5
+    if (4 === 5) {
+      return <div>Hi</div>
+    } else {
+      return <div>I am dumb</div>
+    }
   }
 }
