@@ -1,4 +1,22 @@
 
+import React, { useState, useEffect } from "react"
+function FriendStatus(props) {
+  const [isOnline, setIsOnline] = useState(null)
+
+  useEffect(() => {
+    function genericFunction() {
+      setIsOnline(true)
+    }
+    genericFunction()
+    return () => {
+      genericFunction()
+    }
+  }, [])
+
+  function genericFunction2() {
+    console.log("genericFunction2")
+
+
 
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
@@ -186,45 +204,12 @@ function DeviceList(props) {
         deviceName={_paginateDevices()[index]}
       />
     )
+
   }
 
-  const rowCount = _paginateDevices().length
-  const rowHeight = 55
-  return (
-    <div>
-      <List
-        width={700}
-        height={Math.max(rowCount * rowHeight, 110)}
-        rowCount={rowCount}
-        rowRenderer={_renderRow}
-        rowHeight={rowHeight}
-        id="device-list"
-        devices={_paginateDevices()}
-      />
-      <div id="pagination">
-        <Button
-          size="sm"
-          type="button"
-          className="arrow-button"
-          onClick={() => props.changeCurrentPage(-1, false)}
-          disabled={props.currentPage <= 1}
-        >
-          <img src={BACK_ARROW_IMG} alt="Previous Page" />
-        </Button>
-        <p className="pagination-text">{_getPaginationText()}</p>
-        <Button
-          size="sm"
-          type="button"
-          className="arrow-button"
-          onClick={() => props.changeCurrentPage(1, false)}
-          disabled={
-            Math.ceil(props.devices.length / PAGELENGTH) <= props.currentPage
-          }
-        >
-          <img src={FRONT_ARROW_IMG} alt="Next Page" />
-        </Button>
-      </div>
-    </div>
-  )
+  if (isOnline === null) {
+    return "Loading..."
+  }
+  return isOnline ? "Online" : "Offline"
 }
 
