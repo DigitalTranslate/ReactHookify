@@ -13,10 +13,16 @@ class App extends Component {
       },
     };
   }
+
+  componentDidMount() {
+    this.genericMethod();
+  }
+
   genericMethod() {
     const x = 1 + 2;
   }
-  genericMethod2 = () => {
+
+  genericMethodT = () => {
     const dullVariable = 24;
     this.setState({
       lastName: 'wowow',
