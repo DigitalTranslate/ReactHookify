@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from "react"
-
-function App() {
-  const [firstName, setFirstName] = useState("bobdog")
-  const [lastName, setLastName] = useState("snob")
-  const [friends, setFriends] = useState(["joe", "shmoe"])
-  const [cats, setCats] = useState({ lstName: "woof" })
-  const [kangaroo, setKangaroo] = useState({
-    2: 3,
-    name: "Jacki",
-  })
+function FriendStatus(props) {
+  const [isOnline, setIsOnline] = useState(null)
 
   useEffect(() => {
-    function genericMethod() {
-      const x = 1 + 2
+    function genericFunction() {
+      console.log("genericFunction")
     }
-    genericMethod()
+    genericFunction()
   }, [])
 
-  function genericMethodT() {
-    const dullVariable = 24
-    setLastName("wowow")
+  function genericFunction2() {
+    console.log("genericFunction2")
   }
 
-  return <div></div>
+  if (isOnline === null) {
+    return "Loading..."
+  }
+  return isOnline ? "Online" : "Offline"
 }

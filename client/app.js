@@ -1,34 +1,26 @@
-import React, { Component } from 'react';
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      firstName: 'bobdog',
-      lastName: 'snob',
-      friends: ['joe', 'shmoe'],
-      cats: { lstName: 'woof' },
-      kangaroo: {
-        2: 3,
-        name: 'Jacki',
-      },
-    };
+class FriendStatus extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isOnline: null };
+    this.handleStatusChange = this.handleStatusChange.bind(this);
   }
 
   componentDidMount() {
-    this.genericMethod();
+    this.genericFunction();
   }
 
-  genericMethod() {
-    const x = 1 + 2;
+  genericFunction() {
+    console.log('genericFunction');
   }
 
-  genericMethodT = () => {
-    const dullVariable = 24;
-    this.setState({
-      lastName: 'wowow',
-    });
-  };
+  genericFunction2() {
+    console.log('genericFunction2');
+  }
+
   render() {
-    return <div></div>;
+    if (this.state.isOnline === null) {
+      return 'Loading...';
+    }
+    return this.state.isOnline ? 'Online' : 'Offline';
   }
 }
