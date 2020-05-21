@@ -24,7 +24,7 @@ export default class App extends Component {
   componentWillUnmount() {
     ChatAPI.unsubscribeFromFriendStatus(
       this.props.friend.id,
-      this.handleStatusChange
+      this.handleStatusChange2
     );
   }
   handleStatusChange(status) {

@@ -10,11 +10,14 @@ export default function App(props) {
   })
 
   useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline)
+    }
     ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange)
   }, [])
   useEffect(() => {
     return () => {
-      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange)
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange2)
     }
   }, [])
 
