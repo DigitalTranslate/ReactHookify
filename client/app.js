@@ -14,20 +14,22 @@ export default class App extends Component {
       },
     };
   }
+
   componentDidMount() {
+    genericMethodTest();
+    otherGenericMethod2();
     genericMethod();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    genericMethodTest();
     if (prevProps.counter !== this.props.counter) {
-      console.log(this.props.counter);
-
-      genericMethod();
+      genericMethodTest();
+      document.tile = this.state.title;
     }
-  }
-  componentWillUnmount() {
-    otherGenericMethod2();
-    window.removeEventListener('resize', this.updateDimensions);
+    if (prevState.counter2 !== this.state.counter2) {
+      genericMethodTest();
+    }
   }
 
   otherGenericMethod2 = () => {
@@ -38,6 +40,13 @@ export default class App extends Component {
   };
 
   genericMethod = () => {
+    const dullVariable = 24;
+    this.setState({
+      lastName: 'wowow',
+    });
+  };
+
+  genericMethodTest = () => {
     const dullVariable = 24;
     this.setState({
       lastName: 'wowow',

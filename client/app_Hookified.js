@@ -10,25 +10,27 @@ export default function App(props) {
   })
 
   useEffect(() => {
-    console.log(props.counter)
-
-    genericMethod()
-  }, [props.counter])
-  useEffect(() => {
-    return () => {
-      otherGenericMethod2()
-      window.removeEventListener("resize", updateDimensions)
+    function genericMethod() {
+      const dullVariable = 24
+      setLastName("wowow")
     }
+    function otherGenericMethod2() {
+      const excitingVariable = 23
+      setFirstName("catmeow")
+    }
+    otherGenericMethod2()
+    genericMethod()
   }, [])
-
-  function otherGenericMethod2() {
-    const excitingVariable = 23
-    setFirstName("catmeow")
-  }
-  function genericMethod() {
-    const dullVariable = 24
-    setLastName("wowow")
-  }
+  useEffect(() => {
+    genericMethodTest()
+    document.tile = title
+  }, [counter])
+  useEffect(() => {
+    genericMethodTest()
+  }, [counter])
+  useEffect(() => {
+    genericMethodTest()
+  })
 
   const x = firstName
   return (
