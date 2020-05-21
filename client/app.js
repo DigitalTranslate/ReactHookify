@@ -1,7 +1,7 @@
 class FriendStatus extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isOnline: null, test: 0 };
+    this.state = { isOnline: null };
     this.handleStatusChange = this.handleStatusChange.bind(this);
   }
 
@@ -11,13 +11,6 @@ class FriendStatus extends React.Component {
       this.handleStatusChange
     );
   }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.test !== this.state.test) {
-      console.log('hi');
-    }
-  }
-
   componentWillUnmount() {
     ChatAPI.unsubscribeFromFriendStatus(
       this.props.friend.id,
@@ -28,10 +21,6 @@ class FriendStatus extends React.Component {
     this.setState({
       isOnline: status.isOnline,
     });
-  }
-
-  test() {
-    console.log('hi');
   }
 
   render() {
