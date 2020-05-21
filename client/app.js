@@ -1,31 +1,28 @@
-class FriendStatus extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isOnline: null };
-    this.handleStatusChange = this.handleStatusChange.bind(this);
+import React, { Component } from 'react';
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      firstName: 'bobdog',
+      lastName: 'snob',
+      friends: ['joe', 'shmoe'],
+      cats: { lstName: 'woof' },
+      kangaroo: {
+        2: 3,
+        name: 'Jacki',
+      },
+    };
   }
-
-  async componentDidMount() {
-    await ChatAPI.subscribeToFriendStatus(this.props.friend.id);
+  genericMethod() {
+    const x = 1 + 2;
   }
-
-  componentWillUnmount() {
-    ChatAPI.unsubscribeFromFriendStatus(this.props.friend.id);
-  }
-  handleStatusChange(status) {
+  generic2 = () => {
+    const dullVariable = 24;
     this.setState({
-      isOnline: status.isOnline,
+      lastName: 'wowow',
     });
-  }
-
+  };
   render() {
-    if (this.state.isOnline === null) {
-      return 'Loading...';
-    }
-    return (
-      <div>
-        <div>this.state.isOnline ? 'Online' : 'Offline';</div>;
-      </div>
-    );
+    return <div></div>;
   }
 }
