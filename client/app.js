@@ -5,26 +5,27 @@ class FriendStatus extends React.Component {
     this.handleStatusChange = this.handleStatusChange.bind(this);
   }
 
-  componentDidMount() {
-    this.test(5);
-  }
-  componentDidUpdate(prevProps) {
-    if (this.props.counter !== prevProps.counter) {
-      console.log('hi');
-    }
+  async componentDidMount() {
+    await ChatAPI.subscribeToFriendStatus(this.props.friend.id);
   }
 
-  test(num) {
-    console.log(num);
+  componentWillUnmount() {
+    ChatAPI.unsubscribeFromFriendStatus(this.props.friend.id);
   }
-
   handleStatusChange(status) {
     this.setState({
-      isOnline: true,
+      isOnline: status.isOnline,
     });
   }
 
   render() {
-    return <div>Test</div>;
+    if (this.state.isOnline === null) {
+      return 'Loading...';
+    }
+    return (
+      <div>
+        <div>this.state.isOnline ? 'Online' : 'Offline';</div>;
+      </div>
+    );
   }
 }

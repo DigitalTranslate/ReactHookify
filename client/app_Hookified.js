@@ -3,18 +3,31 @@ function FriendStatus(props) {
   const [isOnline, setIsOnline] = useState(null)
 
   useEffect(() => {
-    function test(num) {
-      console.log(num)
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline)
     }
-    test(5)
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange)
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange)
+    }
   }, [])
   useEffect(() => {
     console.log("hi")
+    genericMethod(5)
   }, [props.counter])
 
-  function handleStatusChange(status) {
-    console.log("HELLO")
+  function genericMethod(num) {
+    handleStatusChange
+    return num + 1
   }
 
-  return <div>Test</div>
+  if (isOnline === null) {
+    return "Loading..."
+  }
+  return (
+    <div>
+      {genericMethod(5)}
+      <div>isOnline ? 'Online' : 'Offline';</div>;
+    </div>
+  )
 }
