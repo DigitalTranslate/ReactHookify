@@ -16,7 +16,7 @@ class App extends Component {
   genericMethod() {
     const x = 1 + 2;
   }
-  generic2 = () => {
+  genericMethod2 = () => {
     const dullVariable = 24;
     this.setState({
       lastName: 'wowow',

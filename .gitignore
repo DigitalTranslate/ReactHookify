@@ -4,3 +4,5 @@ public/bundle.js
 public/bundle.js.map
 bundle.js
 bundle.js.map
+client/app_Hookified.js
+client/app.js

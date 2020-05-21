@@ -1,99 +1,84 @@
-import React from "react"
-import { connect } from "react-redux"
-import { Link } from "react-router-dom"
-import {
-  gotCartItems,
-  tossCartItem,
-  increaseQuantityCart,
-} from "../store/cartItems"
-
-function GuestCart(props) {
-  function genericMethod() {
-    x = 1 = 2
+import React from 'react';
+function DeviceList(props) {
+  function _getPaginationText() {
+    const curPage = props.currentPage;
+    const totalPages = Math.max(
+      1,
+      Math.ceil(props.devices.length / PAGELENGTH)
+    );
+    return `${curPage} of ${totalPages}`;
   }
-  function genericMethod2() {
-    const dullVariable = 24
-    setCartItems(cartItems)
+  function _paginateDevices() {
+    return props.devices.slice(
+      (props.currentPage - 1) * PAGELENGTH,
+      props.currentPage * PAGELENGTH
+    );
   }
-
-  const { cartItems } = props
-  const orders = cartItems.orders
-  if (orders.length === 0) {
+  function _renderRow({ key, index, style }) {
     return (
-      <div>
-        <h2>Your cart is currently empty. </h2>
-      </div>
-    )
-  } else {
-    return (
-      <div>
-        <h2>Items in your cart: </h2>
-        <h2>
-          Total Price: $
-          {orders.reduce(
-            (accumulator, currentValue) =>
-              currentValue.price * currentValue.quantity + accumulator,
-            0
-          ) / 100}
-        </h2>
-        {orders.map((item, idx = 0) => {
-          return (
-            <div id="cart_item" key={idx}>
-              <img id="cart_image" src={item.car.image} />
-              <h4>
-                {item.car.brand} {item.car.name} Price: {item.price / 100}
-              </h4>
-              <div id="cart_quantity">
-                <button className="mini ui basic button" type="button">
-                  -
-                </button>
-                <div id="quantity_num">
-                  <strong>{item.quantity}</strong>
-                </div>
-                <button className="mini ui basic button" type="button">
-                  +
-                </button>
-              </div>
-              <div>
-                <button
-                  key={idx}
-                  className="mini ui basic button"
-                  type="button"
-                >
-                  {" "}
-                  X
-                </button>
-              </div>
-            </div>
-          )
-        })}
-        <div id="checkout_button">
-          <Link to="/signup">
-            <button className="ui primary button" type="button">
-              {" "}
-              Check Out!
-            </button>
-          </Link>
-        </div>
-      </div>
-    )
+      <DeviceRow
+        key={key}
+        style={style}
+        pickDevice={props.pickDevice}
+        deviceName={_paginateDevices()[index]}
+      />
+    );
   }
+
+  const rowCount = _paginateDevices().length;
+  const rowHeight = 55;
+  return (
+    <div>
+      <List
+        width={700}
+        height={Math.max(rowCount * rowHeight, 110)}
+        rowCount={rowCount}
+        rowRenderer={_renderRow}
+        rowHeight={rowHeight}
+        id="device-list"
+        devices={_paginateDevices()}
+      />
+      <div id="pagination">
+        <Button
+          size="sm"
+          type="button"
+          className="arrow-button"
+          onClick={() => props.changeCurrentPage(-1, false)}
+          disabled={props.currentPage <= 1}
+        >
+          <img src={BACK_ARROW_IMG} alt="Previous Page" />
+        </Button>
+        <p className="pagination-text">{_getPaginationText()}</p>
+        <Button
+          size="sm"
+          type="button"
+          className="arrow-button"
+          onClick={() => props.changeCurrentPage(1, false)}
+          disabled={
+            Math.ceil(props.devices.length / PAGELENGTH) <= props.currentPage
+          }
+        >
+          <img src={FRONT_ARROW_IMG} alt="Next Page" />
+        </Button>
+      </div>
+    </div>
+  );
 }
 
 const mapState = (state) => ({
   cartItems: state.cartItems,
-})
+});
 
 const mapDispatch = (dispatch) => ({
   getCartItems: (userID) => {
-    dispatch(gotCartItems(userID))
+    dispatch(gotCartItems(userID));
   },
   tossCartItem: (item) => {
-    dispatch(tossCartItem(item))
+    dispatch(tossCartItem(item));
   },
   getincreaseQuantityCart: (item, value, userId, idx) => {
-    dispatch(increaseQuantityCart(item, value, userId, idx))
+    dispatch(increaseQuantityCart(item, value, userId, idx));
   },
-})
+});
 
-export default connect(mapState, mapDispatch)(GuestCart)
+export default connect(mapState, mapDispatch)(GuestCart);
