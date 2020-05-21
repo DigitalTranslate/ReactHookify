@@ -9,8 +9,14 @@ class FriendStatus extends React.Component {
     this.genericFunction();
   }
 
+  componentWillUnmount() {
+    this.genericFunction();
+  }
+
   genericFunction() {
-    console.log('genericFunction');
+    this.setState({
+      isOnline: true,
+    });
   }
 
   genericFunction2() {

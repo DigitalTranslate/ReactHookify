@@ -4,9 +4,12 @@ function FriendStatus(props) {
 
   useEffect(() => {
     function genericFunction() {
-      console.log("genericFunction")
+      setIsOnline(true)
     }
     genericFunction()
+    return () => {
+      genericFunction()
+    }
   }, [])
 
   function genericFunction2() {
