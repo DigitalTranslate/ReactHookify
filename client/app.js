@@ -16,20 +16,21 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    genericMethodTest();
-    otherGenericMethod2();
-    genericMethod();
+    ChatAPI.subscribeToFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
   }
-
-  componentDidUpdate(prevProps) {
-    genericMethodTest();
-    if (prevProps.counter !== this.props.counter) {
-      genericMethodTest();
-      document.tile = this.state.title;
-    }
-    if (prevState.counter2 !== this.state.counter2) {
-      genericMethodTest();
-    }
+  componentWillUnmount() {
+    ChatAPI.unsubscribeFromFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
+  }
+  handleStatusChange(status) {
+    this.setState({
+      isOnline: status.isOnline,
+    });
   }
 
   otherGenericMethod2 = () => {

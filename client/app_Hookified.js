@@ -10,27 +10,26 @@ export default function App(props) {
   })
 
   useEffect(() => {
-    function genericMethod() {
-      const dullVariable = 24
-      setLastName("wowow")
-    }
-    function otherGenericMethod2() {
-      const excitingVariable = 23
-      setFirstName("catmeow")
-    }
-    otherGenericMethod2()
-    genericMethod()
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange)
   }, [])
   useEffect(() => {
-    genericMethodTest()
-    document.tile = title
-  }, [counter])
-  useEffect(() => {
-    genericMethodTest()
-  }, [counter])
-  useEffect(() => {
-    genericMethodTest()
-  })
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange)
+    }
+  }, [])
+
+  function otherGenericMethod2() {
+    const excitingVariable = 23
+    setFirstName("catmeow")
+  }
+  function genericMethod() {
+    const dullVariable = 24
+    setLastName("wowow")
+  }
+  function genericMethodTest() {
+    const dullVariable = 24
+    setLastName("wowow")
+  }
 
   const x = firstName
   return (
