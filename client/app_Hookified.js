@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
 import { checkoutThunk } from "../store/cart"
@@ -162,7 +163,6 @@ const CheckoutForm = connect(
   mapDispatchToProps
 )(DisconnectedCheckoutForm)
 export default withStyles(styles)(CheckoutForm)
-=======
 
 import React from "react"
 function DeviceList(props) {

@@ -1,4 +1,3 @@
-
 class DeviceList extends React.Component {
   PAGELENGTH = 6
   constructor(props) {
@@ -6,7 +5,6 @@ class DeviceList extends React.Component {
     this._renderRow = this._renderRow.bind(this)
     this._paginateDevices = this._paginateDevices.bind(this)
   }
-
   render() {
     const rowCount = this._paginateDevices().length
     const rowHeight = 55
