@@ -22,7 +22,7 @@
 
 - React Hooks cannot always map 1 to 1 with lifecycle components. Less complex lifecycle components should work fine with React Hookify. In more complex cases, code my have to be rewritten
   - Currently, the only supported lifecycle methods are componentDidMount, componentDidUpdate, and componentWillUnmount
-- React Hookify does not support replacing the whole state with a new object. There is not an exact hook equivalent. For example, replacing the whole state using `this.setState(newObject)` will not be able to be translated
+- React Hookify does not support replacing/grabbing the whole state with a new object. There is not an exact hook equivalent. For example, replacing the whole state using `this.setState(newObject)` will not be able to be translated
 - React Hookify will not be able to translate instances where variable names come from other files. The package is built with parsing logic that looks for variable patterns. This may come up when using **controlled forms**.
   - If you try to implement a controlled form, but the actual form component is in a different file, React Hookify would not be able to identify the needed form names and values.
 - Any comments in the original file will be removed in the 'hookified file'
