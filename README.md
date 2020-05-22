@@ -27,4 +27,4 @@
   - If you try to implement a controlled form, but the actual form component is in a different file, React Hookify would not be able to identify the needed form names and values.
 - Any comments in the original file will be removed in the 'hookified file'
 - React Hookify does not currently support 'get', 'set', and 'static' keywords
-- React Hookify cannot currently translate smiley/frowney faces such as :) or :( (sorry!)
+- React Hookify cannot currently translate any JSX with unclosed parentheses. So no smiley/frowney faces `:) or :(` sorry!
