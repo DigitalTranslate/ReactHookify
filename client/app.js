@@ -1,32 +1,18 @@
-class FriendStatus extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isOnline: null };
-    this.handleStatusChange = this.handleStatusChange.bind(this);
+import React, {useState} from 'react' //prettier-ignore
+
+function FriendStatus(props) {
+  const [isOnline, setIsOnline] = useState(null)
+
+  function genericFunction() {
+    setIsOnline(true)
+  }
+  function genericFunction2() {
+    console.log("genericFunction2")
   }
 
-  componentDidMount() {
-    this.genericFunction();
+  if (isOnline === null) {
+    return "Loading..."
   }
 
-  componentWillUnmount() {
-    this.genericFunction();
-  }
-
-  genericFunction() {
-    this.setState({
-      isOnline: true,
-    });
-  }
-
-  genericFunction2() {
-    console.log('genericFunction2');
-  }
-
-  render() {
-    if (this.state.isOnline === null) {
-      return 'Loading...';
-    }
-    return this.state.isOnline ? 'Online' : 'Offline';
-  }
+  return isOnline ? "Online" : "Offline"
 }
