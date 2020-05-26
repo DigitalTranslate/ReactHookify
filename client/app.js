@@ -1,18 +1,39 @@
-import React, {useState} from 'react' //prettier-ignore
+// Try out our test component below, or write your own!
+import React, { Component } from 'react'
 
-function FriendStatus(props) {
-  const [isOnline, setIsOnline] = useState(null)
-
-  function genericFunction() {
-    setIsOnline(true)
+export default class Test extends Component {
+  constructor() {
+    super()
+    this.state = {
+      firstName: 'Bob',
+      lastName: 'Smith',
+    }
   }
-  function genericFunction2() {
-    console.log("genericFunction2")
+  handleChange(event) {
+    event.preventDefault()
+    this.setState({
+      [event.target.name]: event.target.value,
+      currentFrame: event.target.value,
+    })
   }
-
-  if (isOnline === null) {
-    return "Loading..."
+  render() {
+    return (
+      <div>
+        <div>
+          Hello {this.state.firstName} {this.state.lastName}!
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            this.setState({
+              firstName: 'Tom',
+              lastName: 'Hanks',
+            })
+          }}
+        >
+          Change State!
+        </button>
+      </div>
+    )
   }
-
-  return isOnline ? "Online" : "Offline"
 }
