@@ -27,7 +27,4 @@ describe('hookify', () => {
   it('handles big complex render', () => {
     expect(hookify(specs.test8)).to.equal(specs.answer8)
   })
-  // it('handles basic generic method', () => {
-  //   expect(hookify(specs.test3)).to.equal(specs.answer3)
-  // })
 })

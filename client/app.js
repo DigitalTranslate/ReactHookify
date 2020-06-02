@@ -9,13 +9,7 @@ export default class Test extends Component {
       lastName: 'Smith',
     }
   }
-  handleChange(event) {
-    event.preventDefault()
-    this.setState({
-      [event.target.name]: event.target.value,
-      currentFrame: event.target.value,
-    })
-  }
+
   render() {
     return (
       <div>
